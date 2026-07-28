@@ -6,6 +6,7 @@
 <title>Impressum – Primär Sportprojekte</title>
 <meta name="description" content="Impressum und Offenlegung gemäß §5 ECG, §14 UGB, §63 GewO und §25 Mediengesetz.">
 <meta name="robots" content="index, follow">
+<link rel="canonical" href="https://primaersport-projekte.at/impressum.html">
 <style>
   :root{--green:#2E6E4E;--green-dark:#1F4A35;--green-light:#E8F0EB;--sand:#F7F4EE;--text:#28322D;--grey:#5C6660;--accent:#D98E32}
   *{margin:0;padding:0;box-sizing:border-box}
@@ -64,7 +65,7 @@
         <h2>Kontakt</h2>
         <p>
           <strong>Telefon:</strong> <a href="tel:+436645203520">0664 / 520 35 20</a><br>
-          <strong>E-Mail:</strong> <a href="mailto:office@primaersport-projekte.at">office@primaersport-projekte.at</a><br>
+          <strong>E-Mail:</strong> <a data-user="office" data-host="primaersport-projekte.at">office [at] primaersport-projekte.at</a><br>
           <strong>Web:</strong> <a href="https://primaersport-projekte.at">primaersport-projekte.at</a>
         </p>
       </div>
@@ -114,6 +115,17 @@
 <footer>
   <div class="wrap">© 2026 Primär Sportprojekte · <a href="index.html">Startseite</a> · <a href="wissensdatenbank.html">Wissensdatenbank</a> · <a href="datenschutz.html">Datenschutz</a></div>
 </footer>
+
+<script>
+/* E-Mail-Adressen stehen nicht fertig im Quelltext, sondern werden erst hier
+   zusammengesetzt — sonst sammeln Spam-Harvester sie automatisch ein.
+   Ohne JavaScript bleibt die Adresse als "office [at] …" lesbar. */
+document.querySelectorAll("a[data-user][data-host]").forEach(function (a) {
+  const adr = a.getAttribute("data-user") + "@" + a.getAttribute("data-host");
+  a.setAttribute("href", "mailto:" + adr);
+  a.textContent = adr;
+});
+</script>
 
 </body>
 </html>

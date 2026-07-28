@@ -6,6 +6,7 @@
 <title>Datenschutzerklärung – Primär Sportprojekte</title>
 <meta name="description" content="Informationen zur Verarbeitung personenbezogener Daten auf primaersport-projekte.at gemäß DSGVO.">
 <meta name="robots" content="index, follow">
+<link rel="canonical" href="https://primaersport-projekte.at/datenschutz.html">
 <style>
   :root{--green:#2E6E4E;--green-dark:#1F4A35;--green-light:#E8F0EB;--sand:#F7F4EE;--text:#28322D;--grey:#5C6660;--accent:#D98E32}
   *{margin:0;padding:0;box-sizing:border-box}
@@ -57,7 +58,7 @@
       <strong>Daniel Robnik</strong><br>
       Primär Sportprojekte (Einzelunternehmen)<br>
       Wiener Straße 166f, 8051 Graz, Österreich<br>
-      E-Mail: <a href="mailto:office@primaersport-projekte.at">office@primaersport-projekte.at</a><br>
+      E-Mail: <a data-user="office" data-host="primaersport-projekte.at">office [at] primaersport-projekte.at</a><br>
       Telefon: <a href="tel:+436645203520">0664 / 520 35 20</a>
     </p>
     <p>Für Fragen zum Datenschutz können Sie mich jederzeit unter diesen Kontaktdaten erreichen. Ein Datenschutzbeauftragter ist gesetzlich nicht erforderlich und wurde nicht bestellt.</p>
@@ -126,7 +127,7 @@
       <li><strong>Datenübertragbarkeit</strong> (Art. 20 DSGVO)</li>
       <li><strong>Widerspruch</strong> gegen eine Verarbeitung, die auf berechtigtem Interesse beruht (Art. 21 DSGVO)</li>
     </ul>
-    <p>Zur Ausübung genügt eine formlose Nachricht an <a href="mailto:office@primaersport-projekte.at">office@primaersport-projekte.at</a>.</p>
+    <p>Zur Ausübung genügt eine formlose Nachricht an <a data-user="office" data-host="primaersport-projekte.at">office [at] primaersport-projekte.at</a>.</p>
     <h2>Beschwerderecht</h2>
     <p>Wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht verstößt, können Sie sich bei der Aufsichtsbehörde beschweren:</p>
     <p>
@@ -143,6 +144,17 @@
 <footer>
   <div class="wrap">© 2026 Primär Sportprojekte · <a href="index.html">Startseite</a> · <a href="impressum.html">Impressum</a></div>
 </footer>
+
+<script>
+/* E-Mail-Adressen stehen nicht fertig im Quelltext, sondern werden erst hier
+   zusammengesetzt — sonst sammeln Spam-Harvester sie automatisch ein.
+   Ohne JavaScript bleibt die Adresse als "office [at] …" lesbar. */
+document.querySelectorAll("a[data-user][data-host]").forEach(function (a) {
+  const adr = a.getAttribute("data-user") + "@" + a.getAttribute("data-host");
+  a.setAttribute("href", "mailto:" + adr);
+  a.textContent = adr;
+});
+</script>
 
 </body>
 </html>

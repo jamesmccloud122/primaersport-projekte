@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Primär Sportprojekte – Psychomotorik & Bewegung | Daniel Robnik, Graz</title>
 <meta name="description" content="Psychomotorische Bewegungsangebote in Graz und der Steiermark: Einheiten für Kindergarten und Schule, Fortbildungen für Pädagog:innen, Eltern-Kind-Angebote und Vorträge. Jetzt anfragen und buchen.">
+<link rel="canonical" href="https://primaersport-projekte.at/">
 <style>
   :root{
     --green:#2E6E4E; --green-dark:#1F4A35; --green-light:#E8F0EB;
@@ -75,6 +76,10 @@
   .formstatus.hint{background:#FDF3E4;color:#8A5A18;border:1px solid var(--accent)}
   .formstatus.err{background:#FBEAEA;color:#8C2F2F;border:1px solid #D98080}
   form button[disabled]{opacity:.6;cursor:progress}
+  /* Honeypot: für Menschen unsichtbar, von Bots aber ausgefüllt.
+     Bewusst ausserhalb des Sichtfensters statt display:none — manche Bots
+     überspringen ausgeblendete Felder. */
+  .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 
   footer{background:var(--green-dark);color:#CFE0D6;padding:28px 0;font-size:.88rem}
   footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
@@ -191,14 +196,18 @@
           </select>
           <label for="nachricht">Nachricht</label>
           <textarea id="nachricht" name="nachricht" required></textarea>
-          <p class="note">Mit dem Absenden stimmen Sie zu, dass Ihre Angaben zur Bearbeitung der Anfrage verwendet werden.</p>
+          <div class="hp" aria-hidden="true">
+            <label for="website">Dieses Feld bitte frei lassen</label>
+            <input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <p class="note">Mit dem Absenden stimmen Sie zu, dass Ihre Angaben zur Bearbeitung der Anfrage verwendet werden. Näheres in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
           <br>
           <button class="btn" type="submit">Anfrage absenden</button>
           <p id="formstatus" class="formstatus" role="status" aria-live="polite"></p>
         </form>
       </div>
       <div class="info">
-        <p><strong>Direkt per E-Mail:</strong><br><a href="mailto:office@primaersport-projekte.at">office@primaersport-projekte.at</a></p>
+        <p><strong>Direkt per E-Mail:</strong><br><a data-user="office" data-host="primaersport-projekte.at">office [at] primaersport-projekte.at</a></p>
         <p><strong>Telefon:</strong><br><a href="tel:+436645203520">0664 / 520 35 20</a></p>
         <p><strong>Einsatzgebiet:</strong><br>Graz und Steiermark, weitere Regionen auf Anfrage</p>
         <p><strong>Für Einrichtungen:</strong><br>Gerne erstelle ich ein individuelles Angebot für Ihren Kindergarten, Ihre Schule oder Ihr Team.</p>
@@ -229,7 +238,16 @@
    die ID ein (nur der Teil hinter /f/, z. B. "xayzbwkd"). Ab dann wird die
    Anfrage direkt verschickt und der Besucher bleibt auf der Seite.       */
 const FORMSPREE_ID = "";
-const KONTAKT_MAIL = "office@primaersport-projekte.at";
+
+/* E-Mail-Adressen stehen nicht fertig im Quelltext, sondern werden erst hier
+   zusammengesetzt — sonst sammeln Spam-Harvester sie automatisch ein.
+   Ohne JavaScript bleibt die Adresse als "office [at] …" lesbar. */
+const KONTAKT_MAIL = "office" + "@" + "primaersport-projekte.at";
+document.querySelectorAll("a[data-user][data-host]").forEach(function (a) {
+  const adr = a.getAttribute("data-user") + "@" + a.getAttribute("data-host");
+  a.setAttribute("href", "mailto:" + adr);
+  a.textContent = adr;
+});
 
 const form = document.getElementById("anfrage");
 const statusEl = document.getElementById("formstatus");
@@ -244,6 +262,18 @@ form.addEventListener("submit", async (e) => {
   if (!form.reportValidity()) return;
 
   const d = Object.fromEntries(new FormData(form).entries());
+
+  /* Honeypot: Das Feld ist für Menschen unsichtbar und bleibt daher leer.
+     Ist es ausgefüllt, war ein Bot am Werk — wir melden freundlich Erfolg,
+     verschicken aber nichts. Sichtbares Scheitern würde Bots nur verraten,
+     woran sie erkannt wurden. */
+  if (d._gotcha) {
+    form.reset();
+    melde("Danke für Ihre Anfrage! Ich melde mich in der Regel innerhalb von 48 Stunden.", "ok");
+    return;
+  }
+  delete d._gotcha;
+
   const betreff = "Anfrage über die Website: " + d.thema;
 
   if (!FORMSPREE_ID) {

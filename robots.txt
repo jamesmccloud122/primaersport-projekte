@@ -1,0 +1,7 @@
+# Primär Sportprojekte — https://primaersport-projekte.at
+# Alle Seiten dürfen indexiert werden.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://primaersport-projekte.at/sitemap.xml
