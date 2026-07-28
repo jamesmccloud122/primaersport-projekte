@@ -8,4 +8,9 @@ Allow: /
 Disallow: /update-studien.ps1
 Disallow: /prompt-studien.md
 
+# Der interne Bereich ist ohnehin durch Cloudflare Access gesperrt —
+# hier steht es zusaetzlich, damit er gar nicht erst angefragt wird.
+Disallow: /intern/
+Disallow: /api/
+
 Sitemap: https://primaersport-projekte.at/sitemap.xml

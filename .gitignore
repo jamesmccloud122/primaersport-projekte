@@ -8,3 +8,6 @@ update.log
 # hingehoert, darf gar nicht erst versioniert werden.
 functions/
 intern/
+
+# Lokaler Arbeitsstand von Cloudflare Wrangler (Caches, Zwischenstaende).
+.wrangler/
