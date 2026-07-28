@@ -69,6 +69,12 @@
   .note{font-size:.8rem;color:var(--grey);margin-top:10px}
   .contact .info p{margin-bottom:12px}
   .contact .info a{color:var(--green-dark);font-weight:600}
+  .formstatus{margin-top:14px;font-size:.92rem;padding:0;border-radius:8px}
+  .formstatus:not(:empty){padding:11px 14px}
+  .formstatus.ok{background:var(--green-light);color:var(--green-dark);border:1px solid var(--green)}
+  .formstatus.hint{background:#FDF3E4;color:#8A5A18;border:1px solid var(--accent)}
+  .formstatus.err{background:#FBEAEA;color:#8C2F2F;border:1px solid #D98080}
+  form button[disabled]{opacity:.6;cursor:progress}
 
   footer{background:var(--green-dark);color:#CFE0D6;padding:28px 0;font-size:.88rem}
   footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
@@ -101,7 +107,7 @@
   <div class="wrap">
     <span class="badge">Psychomotorik · Graz &amp; Steiermark</span>
     <h1>Bewegung, die Entwicklung möglich macht.</h1>
-    <p class="lead">Ich bin Daniel – Motopädagoge und Co-Vortragender der Lehrveranstaltung Motopädagogik an der Universität Graz. Ich bringe psychomotorische Bewegungsangebote dorthin, wo Kinder wachsen: in Kindergärten, Schulen und Familien.</p>
+    <p class="lead">Ich bin Daniel – Sportwissenschafter, Trainingstherapeut und Motopädagoge. Ich bringe psychomotorische Bewegungsangebote dorthin, wo Kinder wachsen: in Kindergärten, Schulen und Familien.</p>
     <div class="cta">
       <a class="btn" href="#kontakt">Termin &amp; Anfrage</a>
       <a class="btn ghost" href="#angebote">Angebote ansehen</a>
@@ -130,8 +136,8 @@
       <div>
         <p>Bewegung ist für Kinder kein Extra – sie ist der Weg, über den sie sich selbst, andere und die Welt begreifen. Genau dafür arbeite ich.</p>
         <ul>
+          <li><strong>Sportwissenschafter</strong> und <strong>Trainingstherapeut</strong></li>
           <li>Ausgebildeter <strong>Motopädagoge</strong> (zertifizierte Ausbildung)</li>
-          <li><strong>Co-Vortragender</strong> der Lehrveranstaltung Motopädagogik an der Universität Graz</li>
           <li>Laufende Weiterbildung und aktive Vernetzung in der österreichischen Psychomotorik-Szene</li>
           <li>Mein Anspruch: Praxis, die Freude macht – auf dem Fundament aktueller Forschung</li>
         </ul>
@@ -170,8 +176,7 @@
     <p class="sub">Ich freue mich auf Ihre Anfrage und melde mich in der Regel innerhalb von 48 Stunden.</p>
     <div class="grid">
       <div>
-        <!-- WICHTIG: Bei formspree.io kostenlos registrieren, Formular anlegen und die ID unten ersetzen -->
-        <form action="https://formspree.io/f/DEINE_FORMULAR_ID" method="POST">
+        <form id="anfrage" novalidate>
           <label for="name">Name</label>
           <input id="name" type="text" name="name" required>
           <label for="email">E-Mail</label>
@@ -189,10 +194,12 @@
           <p class="note">Mit dem Absenden stimmen Sie zu, dass Ihre Angaben zur Bearbeitung der Anfrage verwendet werden.</p>
           <br>
           <button class="btn" type="submit">Anfrage absenden</button>
+          <p id="formstatus" class="formstatus" role="status" aria-live="polite"></p>
         </form>
       </div>
       <div class="info">
-        <p><strong>Direkt per E-Mail:</strong><br><a href="mailto:daniel.robnik30@gmail.com">daniel.robnik30@gmail.com</a></p>
+        <p><strong>Direkt per E-Mail:</strong><br><a href="mailto:office@primaersport-projekte.at">office@primaersport-projekte.at</a></p>
+        <p><strong>Telefon:</strong><br><a href="tel:+436645203520">0664 / 520 35 20</a></p>
         <p><strong>Einsatzgebiet:</strong><br>Graz und Steiermark, weitere Regionen auf Anfrage</p>
         <p><strong>Für Einrichtungen:</strong><br>Gerne erstelle ich ein individuelles Angebot für Ihren Kindergarten, Ihre Schule oder Ihr Team.</p>
       </div>
@@ -206,10 +213,68 @@
     <div>
       <a href="wissensdatenbank.html">Wissensdatenbank</a>
       <a href="#kontakt">Kontakt</a>
-      <a href="#">Impressum</a>
+      <a href="impressum.html">Impressum</a>
     </div>
   </div>
 </footer>
+
+<script>
+/* ── Kontaktformular ───────────────────────────────────────────────
+   Solange FORMSPREE_ID leer ist, öffnet das Formular beim Besucher das
+   E-Mail-Programm mit fertig ausgefüllter Anfrage — es funktioniert also
+   sofort, ohne Anmeldung bei irgendeinem Dienst.
+
+   Sobald du auf formspree.io ein Formular angelegt hast, trägst du hier
+   die ID ein (nur der Teil hinter /f/, z. B. "xayzbwkd"). Ab dann wird die
+   Anfrage direkt verschickt und der Besucher bleibt auf der Seite.       */
+const FORMSPREE_ID = "";
+const KONTAKT_MAIL = "office@primaersport-projekte.at";
+
+const form = document.getElementById("anfrage");
+const statusEl = document.getElementById("formstatus");
+
+function melde(text, typ){
+  statusEl.textContent = text;
+  statusEl.className = "formstatus " + typ;
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!form.reportValidity()) return;
+
+  const d = Object.fromEntries(new FormData(form).entries());
+  const betreff = "Anfrage über die Website: " + d.thema;
+
+  if (!FORMSPREE_ID) {
+    const text = "Name: " + d.name + "\nE-Mail: " + d.email +
+                 "\nInteresse: " + d.thema + "\n\n" + d.nachricht;
+    window.location.href = "mailto:" + KONTAKT_MAIL +
+      "?subject=" + encodeURIComponent(betreff) +
+      "&body=" + encodeURIComponent(text);
+    melde("Ihr E-Mail-Programm öffnet sich mit der fertigen Anfrage — bitte nur noch absenden. "
+        + "Falls das nicht klappt, schreiben Sie einfach direkt an " + KONTAKT_MAIL + ".", "hint");
+    return;
+  }
+
+  const btn = form.querySelector("button[type=submit]");
+  btn.disabled = true;
+  melde("Wird gesendet …", "hint");
+  try {
+    const r = await fetch("https://formspree.io/f/" + FORMSPREE_ID, {
+      method: "POST",
+      headers: { "Accept": "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify(Object.assign({}, d, { _subject: betreff }))
+    });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    form.reset();
+    melde("Danke für Ihre Anfrage! Ich melde mich in der Regel innerhalb von 48 Stunden.", "ok");
+  } catch (err) {
+    melde("Das hat leider nicht geklappt. Bitte schreiben Sie direkt an " + KONTAKT_MAIL + ".", "err");
+  } finally {
+    btn.disabled = false;
+  }
+});
+</script>
 
 </body>
 </html>
