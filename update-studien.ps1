@@ -109,6 +109,20 @@ foreach ($zeile in ($ausgabe -split "`r?`n")) {
     if ($zeile.Trim()) { Schreibe-Log ("    " + $zeile.TrimEnd()) }
 }
 
+# --- Fehlschlaege klar benennen -------------------------------------------
+# Wichtig: Ein fehlgeschlagener Lauf darf NICHT wie "heute nichts gefunden"
+# aussehen - sonst meldet das Log monatelang Ruhe, obwohl nichts laeuft.
+if ($ausgabe -match 'Not logged in|Please run /login') {
+    Schreibe-Log 'FEHLER: Claude Code ist nicht angemeldet - es wurde nichts gesucht.'
+    Schreibe-Log '        Einmalig im Terminal ausfuehren:  claude setup-token'
+    Schreibe-Log '        Pruefen mit:                      claude auth status'
+    Beende 'ERGEBNIS: Lauf fehlgeschlagen (nicht angemeldet).'
+}
+if ($code -ne 0) {
+    Schreibe-Log "FEHLER: Claude-Lauf fehlgeschlagen (Exitcode $code) - siehe Ausgabe oben."
+    Beende 'ERGEBNIS: Lauf fehlgeschlagen.'
+}
+
 # --- Ergebnis festhalten --------------------------------------------------
 $anzahlNachher = ([regex]::Matches((Get-Content $Studien -Raw), '(?m)^\s*title:')).Count
 $neu = $anzahlNachher - $anzahlVorher
