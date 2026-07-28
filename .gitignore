@@ -7,3 +7,4 @@ update.log
 # gehoeren. Alles im Repo wird oeffentlich ausgeliefert - was hier nicht
 # hingehoert, darf gar nicht erst versioniert werden.
 functions/
+intern/
