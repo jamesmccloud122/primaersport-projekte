@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wissensdatenbank Psychomotorik – Primär Sportprojekte</title>
+<meta name="description" content="Aktuelle Studien zu Psychomotorik, Motopädagogik und motorischer Entwicklung – zusammengefasst mit Original-Links.">
+<style>
+  :root{--green:#2E6E4E;--green-dark:#1F4A35;--green-light:#E8F0EB;--sand:#F7F4EE;--text:#28322D;--grey:#5C6660;--accent:#D98E32}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--text);line-height:1.6;background:var(--sand)}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  header{background:#fff;box-shadow:0 1px 8px rgba(0,0,0,.08)}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+  .logo{font-weight:800;font-size:1.15rem;color:var(--green-dark);text-decoration:none}
+  .logo span{color:var(--accent)}
+  nav a.back{color:var(--green);text-decoration:none;font-weight:600}
+  .head{padding:44px 0 26px}
+  h1{color:var(--green-dark);font-size:1.9rem;margin-bottom:10px}
+  .head p{color:var(--grey);max-width:640px}
+  .toolbar{padding:0 0 22px;display:flex;gap:12px;flex-wrap:wrap}
+  .toolbar input{flex:1;min-width:220px;padding:12px 14px;border:1px solid #C9D2CC;border-radius:10px;font-size:1rem}
+  .toolbar select{padding:12px 14px;border:1px solid #C9D2CC;border-radius:10px;font-size:1rem;background:#fff}
+  .study{background:#fff;border-radius:14px;padding:24px 24px 20px;margin-bottom:18px;border-left:5px solid var(--green)}
+  .study h2{font-size:1.12rem;color:var(--green-dark);margin-bottom:6px;line-height:1.4}
+  .meta{font-size:.85rem;color:var(--grey);margin-bottom:12px}
+  .tag{display:inline-block;background:var(--green-light);color:var(--green-dark);border-radius:14px;padding:2px 12px;font-size:.78rem;margin-right:6px}
+  .study h4{font-size:.9rem;color:var(--green);margin:10px 0 2px}
+  .study p{font-size:.94rem}
+  .study a.link{display:inline-block;margin-top:12px;color:var(--accent);font-weight:600;text-decoration:none}
+  .study a.link:hover{text-decoration:underline}
+  .count{color:var(--grey);font-size:.88rem;margin-bottom:16px}
+  footer{background:var(--green-dark);color:#CFE0D6;padding:24px 0;font-size:.88rem;margin-top:40px;text-align:center}
+  footer a{color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="index.html">Primär<span>Sport</span>projekte</a>
+      <a class="back" href="index.html">← Zurück zur Startseite</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="head">
+    <h1>Wissensdatenbank Psychomotorik</h1>
+    <p>Hier sammle ich laufend aktuelle wissenschaftliche Studien zu Psychomotorik, Motopädagogik und motorischer Entwicklung – kurz zusammengefasst, mit Einordnung für die Praxis und dem Link zur Originalstudie.</p>
+  </div>
+
+  <div class="toolbar">
+    <input id="search" type="search" placeholder="Suchen: z. B. Grafomotorik, exekutive Funktionen, DCD …">
+    <select id="topic">
+      <option value="">Alle Themen</option>
+    </select>
+  </div>
+  <div class="count" id="count"></div>
+  <div id="list"></div>
+</div>
+
+<footer>
+  <div class="wrap">© 2026 Primär Sportprojekte · <a href="index.html">Startseite</a></div>
+</footer>
+
+<script>
+const studies = [
+  {
+    title: "Effect of a Psychomotor Intervention on Motor Competence, Graphomotor Performance and Writing Proficiency in 5- to 6-Year-Old Preschool Children",
+    authors: "Blanco-Martínez et al., 2026 · Children (MDPI)",
+    topic: "Psychomotorik & Grafomotorik",
+    method: "34 Vorschulkinder (5–6 J., Spanien); quasi-experimentell: 6 Wochen, 3×/Woche 50 Min psychomotorische Einheiten vs. Regelunterricht.",
+    findings: "Signifikante Verbesserung der grafomotorischen Leistung (p<0,001) und aller vier motorischen Aufgaben; bei der Schreibfertigkeit war v. a. die Stifthaltung signifikant verbessert.",
+    relevance: "Starkes Argument für psychomotorische Einheiten im Kindergarten zur Schreibvorbereitung – inklusive konkretem Stundenformat.",
+    link: "https://www.mdpi.com/2227-9067/13/7/973",
+    date: "2026-07-28"
+  },
+  {
+    title: "Fundamental motor skill interventions significantly improve executive functions and social–emotional competence in preschoolers: a meta-analysis",
+    authors: "2026 · Frontiers in Psychology",
+    topic: "Motorik & exekutive Funktionen",
+    method: "Meta-Analyse (PRISMA), 10 Studien, n = 2.039 Vorschulkinder, Zeitraum 2000–2025.",
+    findings: "Exekutive Funktionen: SMD = 0,40 (p<0,001); sozial-emotionale Kompetenz: SMD = 0,16 (p=0,02). Mehr als 2 Einheiten/Woche à 30 Min wirken deutlich stärker (0,51 vs. 0,27); 5-Jährige profitieren mehr als 3–4-Jährige.",
+    relevance: "Belegt den Kern der Psychomotorik: Bewegung fördert Denken und Sozialverhalten – mit klarer Dosierungsempfehlung für Kurskonzepte.",
+    link: "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1721589/full",
+    date: "2026-07-28"
+  },
+  {
+    title: "Motor-Based Interventions in Children with Developmental Coordination Disorder: A Systematic Review and Meta-analysis of Randomised Controlled Trials",
+    authors: "2025 · Sports Medicine – Open",
+    topic: "Motorische Förderung bei DCD",
+    method: "Meta-Analyse von 32 randomisierten kontrollierten Studien, n = 1.265 Kinder (4–13 Jahre).",
+    findings: "Große Effekte auf Gesamtmotorik (g = 1,00) und kognitive Funktion (g = 1,53); Grobmotorik g = 0,95, Gleichgewicht g = 0,57. Aufgabenorientierte Ansätze wirken konsistent besser als rein prozessorientierte.",
+    relevance: "Wichtig für die Arbeit mit koordinationsschwachen Kindern und für die Abgrenzung von Pädagogik und Therapie: aufgabenorientiertes Üben ist der wirksamste Weg.",
+    link: "https://link.springer.com/article/10.1186/s40798-025-00833-w",
+    date: "2026-07-28"
+  },
+  {
+    title: "Beyond the Classroom: Investigating the Relationship between Psychomotor Development and Academic Achievement in 4–12-Year-Olds",
+    authors: "Amorim, Marques & Santos, 2024 · PMC",
+    topic: "Psychomotorik & Schulleistung",
+    method: "Querschnittstudie mit 350 Kindern (4–12 J., Portugal); Instrumente: NPmot.pt, PRE, SLSB; Korrelations- und Regressionsanalysen.",
+    findings: "Im Vorschulalter erklärt die psychomotorische Entwicklung 58 % der Varianz der Leistungen (r = 0,30–0,82); stärkste Prädiktoren: Tonus, Grobmotorik, Rhythmus. Im Schulalter sinkt die Varianzaufklärung auf 5,2 %.",
+    relevance: "Kernbotschaft für Elternabende und Fortbildungen: Das Zeitfenster Kindergarten/Vorschule ist entscheidend – genau dort setzt Psychomotorik an.",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11352431/",
+    date: "2026-07-28"
+  }
+];
+
+const list = document.getElementById("list");
+const search = document.getElementById("search");
+const topicSel = document.getElementById("topic");
+const count = document.getElementById("count");
+
+[...new Set(studies.map(s => s.topic))].forEach(t => {
+  const o = document.createElement("option"); o.value = t; o.textContent = t; topicSel.appendChild(o);
+});
+
+function render(){
+  const q = search.value.toLowerCase();
+  const t = topicSel.value;
+  const filtered = studies.filter(s =>
+    (!t || s.topic === t) &&
+    (!q || (s.title + s.authors + s.topic + s.method + s.findings + s.relevance).toLowerCase().includes(q))
+  );
+  count.textContent = filtered.length + " von " + studies.length + " Studien";
+  list.innerHTML = filtered.map(s => `
+    <article class="study">
+      <span class="tag">${s.topic}</span><span class="tag">erfasst ${s.date}</span>
+      <h2>${s.title}</h2>
+      <div class="meta">${s.authors}</div>
+      <h4>Stichprobe & Methode</h4><p>${s.method}</p>
+      <h4>Kernaussagen</h4><p>${s.findings}</p>
+      <h4>Praxisrelevanz</h4><p>${s.relevance}</p>
+      <a class="link" href="${s.link}" target="_blank" rel="noopener">→ Studie im Original lesen</a>
+    </article>`).join("");
+}
+search.addEventListener("input", render);
+topicSel.addEventListener("change", render);
+render();
+</script>
+
+</body>
+</html>

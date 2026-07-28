@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primär Sportprojekte – Psychomotorik & Bewegung | Daniel Robnik, Graz</title>
+<meta name="description" content="Psychomotorische Bewegungsangebote in Graz und der Steiermark: Einheiten für Kindergarten und Schule, Fortbildungen für Pädagog:innen, Eltern-Kind-Angebote und Vorträge. Jetzt anfragen und buchen.">
+<style>
+  :root{
+    --green:#2E6E4E; --green-dark:#1F4A35; --green-light:#E8F0EB;
+    --sand:#F7F4EE; --text:#28322D; --grey:#5C6660; --accent:#D98E32;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--text);line-height:1.6;background:#fff}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+
+  header{position:sticky;top:0;background:#fff;box-shadow:0 1px 8px rgba(0,0,0,.08);z-index:10}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+  .logo{font-weight:800;font-size:1.15rem;color:var(--green-dark);text-decoration:none}
+  .logo span{color:var(--accent)}
+  nav ul{display:flex;gap:22px;list-style:none;flex-wrap:wrap}
+  nav a{color:var(--text);text-decoration:none;font-size:.95rem}
+  nav a:hover{color:var(--green)}
+  .btn{display:inline-block;background:var(--green);color:#fff !important;padding:10px 22px;border-radius:28px;text-decoration:none;font-weight:600;border:none;font-size:1rem;cursor:pointer}
+  .btn:hover{background:var(--green-dark)}
+  .btn.ghost{background:transparent;color:var(--green) !important;border:2px solid var(--green)}
+  .btn.ghost:hover{background:var(--green-light)}
+
+  .hero{background:linear-gradient(135deg,var(--green-light),var(--sand));padding:72px 0 64px}
+  .hero h1{font-size:clamp(1.7rem,4.5vw,2.7rem);color:var(--green-dark);line-height:1.2;margin-bottom:18px}
+  .hero p.lead{font-size:1.15rem;color:var(--grey);max-width:640px;margin-bottom:28px}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .badge{display:inline-block;background:#fff;border:1px solid var(--green);color:var(--green-dark);border-radius:20px;padding:4px 14px;font-size:.85rem;margin-bottom:18px}
+
+  section{padding:58px 0}
+  h2{color:var(--green-dark);font-size:1.7rem;margin-bottom:8px}
+  .sub{color:var(--grey);margin-bottom:32px;max-width:640px}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+  .card{background:var(--sand);border-radius:14px;padding:26px 22px;border-top:4px solid var(--green)}
+  .card .icon{font-size:1.9rem;margin-bottom:10px;display:block}
+  .card h3{color:var(--green-dark);font-size:1.08rem;margin-bottom:8px}
+  .card p{font-size:.93rem;color:var(--grey)}
+
+  .about{background:var(--green-light)}
+  .about .grid{display:grid;grid-template-columns:1fr 2fr;gap:34px;align-items:start}
+  .about .photo{background:#fff;border-radius:14px;min-height:220px;display:flex;align-items:center;justify-content:center;color:var(--grey);font-size:.9rem;text-align:center;padding:16px;border:2px dashed var(--green)}
+  .about ul{margin:14px 0 0 18px;color:var(--text)}
+  .about li{margin-bottom:6px}
+
+  .science{background:#fff}
+  .science .box{background:var(--green-dark);color:#fff;border-radius:16px;padding:36px 30px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+  .science .box p{max-width:560px;color:#DFEAE4}
+  .science .box h2{color:#fff}
+  .science .btn{background:var(--accent)}
+  .science .btn:hover{background:#b87424}
+
+  .steps{counter-reset:step}
+  .steps .cards{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .step{background:#fff;border:1px solid #E1E5E2;border-radius:14px;padding:24px 20px}
+  .step::before{counter-increment:step;content:counter(step);display:inline-flex;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;align-items:center;justify-content:center;font-weight:700;margin-bottom:12px}
+
+  .contact{background:var(--sand)}
+  .contact .grid{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+  form label{display:block;font-weight:600;margin:14px 0 4px;font-size:.92rem}
+  form input,form textarea,form select{width:100%;padding:11px 12px;border:1px solid #C9D2CC;border-radius:8px;font-size:1rem;font-family:inherit;background:#fff}
+  form textarea{min-height:120px;resize:vertical}
+  .note{font-size:.8rem;color:var(--grey);margin-top:10px}
+  .contact .info p{margin-bottom:12px}
+  .contact .info a{color:var(--green-dark);font-weight:600}
+
+  footer{background:var(--green-dark);color:#CFE0D6;padding:28px 0;font-size:.88rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  footer a{color:#fff;text-decoration:none;margin-left:16px}
+
+  @media(max-width:720px){
+    .about .grid,.contact .grid{grid-template-columns:1fr}
+    nav ul{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#">Primär<span>Sport</span>projekte</a>
+      <ul>
+        <li><a href="#angebote">Angebote</a></li>
+        <li><a href="#ueber-mich">Über mich</a></li>
+        <li><a href="wissensdatenbank.html">Wissensdatenbank</a></li>
+        <li><a href="#ablauf">Ablauf</a></li>
+      </ul>
+      <a class="btn" href="#kontakt">Jetzt anfragen</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="badge">Psychomotorik · Graz &amp; Steiermark</span>
+    <h1>Bewegung, die Entwicklung möglich macht.</h1>
+    <p class="lead">Ich bin Daniel – Motopädagoge und Co-Vortragender der Lehrveranstaltung Motopädagogik an der Universität Graz. Ich bringe psychomotorische Bewegungsangebote dorthin, wo Kinder wachsen: in Kindergärten, Schulen und Familien.</p>
+    <div class="cta">
+      <a class="btn" href="#kontakt">Termin &amp; Anfrage</a>
+      <a class="btn ghost" href="#angebote">Angebote ansehen</a>
+    </div>
+  </div>
+</section>
+
+<section id="angebote">
+  <div class="wrap">
+    <h2>Meine Angebote</h2>
+    <p class="sub">Alle Einheiten basieren auf dem psychomotorischen Ansatz: Kinder stärken – über Körper-, Material- und Sozialerfahrungen.</p>
+    <div class="cards">
+      <div class="card"><span class="icon">🤸</span><h3>Einheiten für Kindergarten &amp; Schule</h3><p>Regelmäßige psychomotorische Bewegungseinheiten oder Projektwochen – direkt in Ihrer Einrichtung, abgestimmt auf Alter und Gruppe.</p></div>
+      <div class="card"><span class="icon">🎓</span><h3>Fortbildungen &amp; Workshops</h3><p>Praxisnahe Fortbildungen für Pädagog:innen und Teams: Grundlagen der Psychomotorik, Stundengestaltung, Material-Ideen zum sofortigen Einsatz.</p></div>
+      <div class="card"><span class="icon">👨‍👧</span><h3>Eltern-Kind-Angebote</h3><p>Gemeinsame Bewegungsnachmittage und Kurse, in denen Eltern erleben, wie viel Entwicklung in freiem Spiel und Bewegung steckt.</p></div>
+      <div class="card"><span class="icon">🎤</span><h3>Vorträge</h3><p>Verständliche, wissenschaftlich fundierte Vorträge zu Bewegung, Wahrnehmung und kindlicher Entwicklung – für Elternabende und Fachpublikum.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="ueber-mich" class="about">
+  <div class="wrap">
+    <h2>Über mich</h2>
+    <div class="grid">
+      <div class="photo">Hier Foto einfügen<br>(Empfehlung: freundliches Porträt oder Aktionsbild aus einer Bewegungseinheit)</div>
+      <div>
+        <p>Bewegung ist für Kinder kein Extra – sie ist der Weg, über den sie sich selbst, andere und die Welt begreifen. Genau dafür arbeite ich.</p>
+        <ul>
+          <li>Ausgebildeter <strong>Motopädagoge</strong> (zertifizierte Ausbildung)</li>
+          <li><strong>Co-Vortragender</strong> der Lehrveranstaltung Motopädagogik an der Universität Graz</li>
+          <li>Laufende Weiterbildung und aktive Vernetzung in der österreichischen Psychomotorik-Szene</li>
+          <li>Mein Anspruch: Praxis, die Freude macht – auf dem Fundament aktueller Forschung</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="science">
+  <div class="wrap">
+    <div class="box">
+      <div>
+        <h2>Wissen, das wirkt</h2>
+        <p>Ich verfolge laufend die aktuelle Forschung zu Psychomotorik und motorischer Entwicklung – und sammle die wichtigsten Studien in einer offenen Wissensdatenbank. Schauen Sie hinein: Jede Studie mit Kernaussagen und Original-Link.</p>
+      </div>
+      <a class="btn" href="wissensdatenbank.html">Zur Wissensdatenbank →</a>
+    </div>
+  </div>
+</section>
+
+<section id="ablauf" class="steps">
+  <div class="wrap">
+    <h2>So einfach geht's</h2>
+    <p class="sub">Von der Anfrage bis zur ersten Bewegungseinheit in drei Schritten.</p>
+    <div class="cards">
+      <div class="step"><h3>Anfrage senden</h3><p>Kurz beschreiben, was Sie sich wünschen – per Formular oder E-Mail.</p></div>
+      <div class="step"><h3>Kostenloses Vorgespräch</h3><p>Wir klären Ziele, Gruppe, Räumlichkeiten und Termine – telefonisch oder vor Ort.</p></div>
+      <div class="step"><h3>Los geht's</h3><p>Maßgeschneiderte Einheiten, laufende Abstimmung und auf Wunsch eine Abschluss-Reflexion.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt" class="contact">
+  <div class="wrap">
+    <h2>Kontakt &amp; Buchung</h2>
+    <p class="sub">Ich freue mich auf Ihre Anfrage und melde mich in der Regel innerhalb von 48 Stunden.</p>
+    <div class="grid">
+      <div>
+        <!-- WICHTIG: Bei formspree.io kostenlos registrieren, Formular anlegen und die ID unten ersetzen -->
+        <form action="https://formspree.io/f/DEINE_FORMULAR_ID" method="POST">
+          <label for="name">Name</label>
+          <input id="name" type="text" name="name" required>
+          <label for="email">E-Mail</label>
+          <input id="email" type="email" name="email" required>
+          <label for="thema">Interesse</label>
+          <select id="thema" name="thema">
+            <option>Einheiten für Kindergarten / Schule</option>
+            <option>Fortbildung / Workshop</option>
+            <option>Eltern-Kind-Angebot</option>
+            <option>Vortrag</option>
+            <option>Sonstiges</option>
+          </select>
+          <label for="nachricht">Nachricht</label>
+          <textarea id="nachricht" name="nachricht" required></textarea>
+          <p class="note">Mit dem Absenden stimmen Sie zu, dass Ihre Angaben zur Bearbeitung der Anfrage verwendet werden.</p>
+          <br>
+          <button class="btn" type="submit">Anfrage absenden</button>
+        </form>
+      </div>
+      <div class="info">
+        <p><strong>Direkt per E-Mail:</strong><br><a href="mailto:daniel.robnik30@gmail.com">daniel.robnik30@gmail.com</a></p>
+        <p><strong>Einsatzgebiet:</strong><br>Graz und Steiermark, weitere Regionen auf Anfrage</p>
+        <p><strong>Für Einrichtungen:</strong><br>Gerne erstelle ich ein individuelles Angebot für Ihren Kindergarten, Ihre Schule oder Ihr Team.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Primär Sportprojekte · Daniel Robnik</div>
+    <div>
+      <a href="wissensdatenbank.html">Wissensdatenbank</a>
+      <a href="#kontakt">Kontakt</a>
+      <a href="#">Impressum</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
