@@ -105,6 +105,10 @@ Nur wenn du etwas ergänzt hast:
    `ERGEBNIS: Syntaxfehler, Änderung verworfen` aus.
 2. Ist die Prüfung in Ordnung: `git add studien.js`, dann committen mit der Nachricht
    `Studien-Update: <Titel der ersten neuen Studie>` und mit `git push` veröffentlichen.
+   **Warte, bis der Push tatsächlich abgeschlossen ist**, und prüfe mit
+   `git status`, dass nichts mehr aussteht. Beende dich nicht, solange ein Push
+   noch im Hintergrund läuft — sonst bleibt der Commit liegen und die Website
+   wird nicht aktualisiert.
 3. Gib als letzte Zeile aus:
 
 ```

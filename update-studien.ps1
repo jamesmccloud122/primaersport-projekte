@@ -140,4 +140,26 @@ if ($offen.Trim()) {
     Schreibe-Log 'HINWEIS: studien.js ist geaendert, aber nicht committet.'
 }
 
+# --- Veroeffentlichung sicherstellen --------------------------------------
+# Der Headless-Lauf beendet sich mitunter, waehrend sein git push noch im
+# Hintergrund laeuft - dann liegt der Commit nur lokal und die Website
+# bleibt auf altem Stand. Deshalb hier unabhaengig nachpruefen und
+# gegebenenfalls selbst pushen.
+git -C $Projekt fetch origin 2>&1 | Out-Null
+$unpushed = (git -C $Projekt log 'origin/main..HEAD' --oneline 2>&1 | Out-String).Trim()
+if ($unpushed) {
+    Schreibe-Log 'Nicht veroeffentlichte Commits gefunden - wird nachgepusht ...'
+    $push = git -C $Projekt push origin main 2>&1 | Out-String
+    Schreibe-Log ('git push: ' + ($push.Trim() -replace '\s*\r?\n\s*', ' | '))
+    git -C $Projekt fetch origin 2>&1 | Out-Null
+    $rest = (git -C $Projekt log 'origin/main..HEAD' --oneline 2>&1 | Out-String).Trim()
+    if ($rest) {
+        Schreibe-Log 'FEHLER: Push fehlgeschlagen - die Aenderung ist NICHT live.'
+    } else {
+        Schreibe-Log 'Push bestaetigt - die Aenderung ist veroeffentlicht.'
+    }
+} else {
+    Schreibe-Log 'Veroeffentlichung bestaetigt - nichts offen.'
+}
+
 Beende 'Fertig.'
