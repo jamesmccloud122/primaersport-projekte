@@ -4,4 +4,8 @@
 User-agent: *
 Allow: /
 
+# Betriebsdateien der Studien-Automatik gehoeren nicht in den Suchindex.
+Disallow: /update-studien.ps1
+Disallow: /prompt-studien.md
+
 Sitemap: https://primaersport-projekte.at/sitemap.xml
