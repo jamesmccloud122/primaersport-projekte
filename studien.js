@@ -4,6 +4,26 @@
    findings, relevance, link, date. */
 const studies = [
   {
+    title: "Optimal exercise interventions for enhancing cognitive function in older adults: a network meta-analysis",
+    authors: "Han et al., 2025 · Frontiers in Aging Neuroscience",
+    topic: "Motogeragogik",
+    method: "Netzwerk-Meta-Analyse von 58 RCTs mit insgesamt 4.349 kognitiv gesunden älteren Erwachsenen; verglichen wurden 5 Bewegungsmodalitäten: Widerstandstraining, Ausdauertraining, achtsamkeitsbasierte Bewegung (Tai Chi, Yoga), Mehrkomponenten­training und HIIT.",
+    findings: "Achtsamkeitsbasierte Bewegung erzielte die größten Effekte auf die globale Kognition (SMD = 0,62, 95 % KI: 0,38–0,86, p < 0,001) und das Arbeitsgedächtnis (SMD = 2,45, 95 % KI: 1,48–3,42, p < 0,001); Widerstandstraining war am wirksamsten für die Inhibitionskontrolle (SMD = −0,32, p = 0,04, SUCRA = 82,1 %); Ausdauertraining verbesserte die Gedächtnisfunktion (SMD = 0,42, p < 0,001). Optimale Dosierung: 2× wöchentlich, 45 Min., 12 Wochen.",
+    relevance: "Für die motogeragogische Praxis: Achtsamkeitsbasierte Bewegungsformen wie Tai Chi und Yoga sind besonders wirksam, um kognitive Funktionen im Alter zu erhalten — ein starkes Argument für integrative Bewegungsprogramme in der Seniorenarbeit.",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12289702/",
+    date: "2026-07-29"
+  },
+  {
+    title: "Effects of movement behaviors on preschoolers' cognition: a systematic review of randomized controlled trials",
+    authors: "Pacheco et al., 2025 · International Journal of Behavioral Nutrition and Physical Activity (Springer/BMC)",
+    topic: "Bewegungsförderung Vorschule",
+    method: "Systematisches Review von 22 RCTs (14 individuell, 8 Cluster-RCTs); Vorschulkinder im Alter 3,8–5,84 Jahre; Stichprobengrößen zwischen 45 und 486 Kindern pro Studie; Interventionen umfassten körperliche Aktivität, Sedentärverhalten und Schlaf; Einschlusskriterium: mind. 4 Wochen Dauer, kognitive Outcomes als primäres Ziel.",
+    findings: "19 von 22 Studien zeigten signifikante Verbesserungen kognitiver Outcomes; kognitiv angereicherte Bewegungsinterventionen erzielten die größten Effekte (Cohen's d > 0,8 für exekutive Funktionen; Beispiel: d = 2,33 für Inhibitionskontrolle); allgemeine Motorik- und Bewegungsprogramme zeigten moderate Effekte (d = 0,5–0,8). Keine RCTs zu kombinierten 24-Stunden-Bewegungsinterventionen vorhanden.",
+    relevance: "Für Kita und Vorschule gilt: Reine Bewegungszeit reicht nicht — erst die kognitive Anreicherung (z. B. Regelspiele, Bewegungsaufgaben mit Planungs- und Gedächtnisanforderungen) erzielt große Effekte auf Denken und Lernen.",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11755889/",
+    date: "2026-07-29"
+  },
+  {
     title: "Effects of exercise interventions on hand-eye coordination and fine motor skills in children with developmental coordination disorder: a meta-analysis",
     authors: "Shi et al., 2025 · Frontiers in Physiology",
     topic: "Motorische Förderung bei DCD",
