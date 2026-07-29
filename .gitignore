@@ -3,11 +3,15 @@
 # ausgeliefert, das Log gehoert nicht auf die Website.
 update.log
 
-# Fremde Dateien, die im Ordner liegen, aber nicht zu dieser Website
-# gehoeren. Alles im Repo wird oeffentlich ausgeliefert - was hier nicht
-# hingehoert, darf gar nicht erst versioniert werden.
-functions/
-intern/
+# ACHTUNG - nicht automatisch "aufraeumen":
+# Die Ordner functions/ und intern/ gehoeren zur Website und MUESSEN im
+# Repo bleiben. functions/ ist der Serverteil von Cloudflare Pages
+# (/api/data + Zugriffsschutz), intern/ ist der passwortgeschuetzte
+# Bereich. Beide werden von Cloudflare Pages aus dem Repo veroeffentlicht.
+# Wer sie ignoriert, nimmt die Website den internen Bereich weg.
 
 # Lokaler Arbeitsstand von Cloudflare Wrangler (Caches, Zwischenstaende).
 .wrangler/
+
+# Abhaengigkeiten, falls lokal einmal npm benutzt wird.
+node_modules/

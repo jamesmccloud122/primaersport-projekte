@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Interner Bereich – Primär Sportprojekte</title>
+<link rel="stylesheet" href="gemeinsam.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kopfzeile">
+      <a class="logo" href="index.html">Primär<span>Sport</span>projekte<em>intern</em></a>
+      <div id="status" class="status">Lädt …</div>
+    </div>
+    <nav class="bereiche">
+      <a href="index.html">Übersicht</a>
+      <a href="zielplan.html">Zielplan</a>
+      <a href="stundenbilder.html">Notizen &amp; Stundenbilder</a>
+      <a href="spiele.html">Spieledatenbank</a>
+      <a href="/">↗ Öffentliche Website</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="seitenkopf">
+    <h1 id="gruss">Willkommen zurück</h1>
+    <p>Dein persönlicher Arbeitsbereich. Alles, was du hier einträgst, liegt auf deinem
+       eigenen Cloudflare-Speicher und ist auf allen Geräten sofort verfügbar.</p>
+  </div>
+
+  <div class="kacheln">
+    <a class="kachel" href="zielplan.html">
+      <span class="icon">🎯</span>
+      <h2>Zielplan</h2>
+      <p>Deine vier Phasen mit Meilensteinen zum Abhaken und dem monatlichen Rückblick.</p>
+      <span class="zahl" id="zahl-zielplan">wird geladen …</span>
+    </a>
+    <a class="kachel" href="stundenbilder.html">
+      <span class="icon">📝</span>
+      <h2>Notizen &amp; Stundenbilder</h2>
+      <p>Psychomotorische Stundenplanungen mit Ablauf, Material und Reflexion.</p>
+      <span class="zahl" id="zahl-stundenbilder">wird geladen …</span>
+    </a>
+    <a class="kachel" href="spiele.html">
+      <span class="icon">🤸</span>
+      <h2>Spieledatenbank</h2>
+      <p>Deine Sammlung an Spielen und Übungen, sortiert nach Kategorie und Alter.</p>
+      <span class="zahl" id="zahl-spiele">wird geladen …</span>
+    </a>
+  </div>
+
+  <div class="sicherung">
+    <h3>Sicherung aller Bereiche</h3>
+    <p>Lädt Zielplan, Stundenbilder und Spiele gemeinsam als eine JSON-Datei herunter.
+       Damit bist du unabhängig von Cloudflare — die Datei lässt sich jederzeit wieder einspielen.
+       Empfehlung: einmal im Monat herunterladen und in deinen Obsidian-Vault legen.</p>
+    <div class="knoepfe">
+      <button class="btn sand" onclick="Sicherung.alleHerunterladen()">⬇ Komplette Sicherung herunterladen</button>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Interner Bereich · Primär Sportprojekte</div>
+    <div>Angemeldet als <span id="angemeldet">—</span></div>
+  </div>
+</footer>
+
+<script src="gemeinsam.js"></script>
+<script>
+/* Die Übersicht liest alle drei Bereiche, um die Anzahlen zu zeigen. */
+
+const stunde = new Date().getHours();
+document.getElementById('gruss').textContent =
+  (stunde < 11 ? 'Guten Morgen' : stunde < 18 ? 'Schönen Tag' : 'Guten Abend') + ', Daniel';
+
+function setze(id, text) { document.getElementById(id).textContent = text; }
+
+function zahlwort(n, einzahl, mehrzahl) {
+  return n + ' ' + (n === 1 ? einzahl : mehrzahl);
+}
+
+(async function laden() {
+  Status.setze('Lädt …', 'laeuft');
+  let fehlerText = null;
+
+  const bereiche = [
+    ['zielplan', d => {
+      const alle = (d.phasen || []).flatMap(p => p.meilensteine || []);
+      if (!alle.length) return 'Noch keine Meilensteine eingetragen';
+      const fertig = alle.filter(m => m.erledigt).length;
+      return fertig + ' von ' + zahlwort(alle.length, 'Meilenstein', 'Meilensteinen') + ' erledigt';
+    }],
+    ['stundenbilder', d => {
+      const n = (d.eintraege || []).length;
+      return n ? zahlwort(n, 'Stundenbild', 'Stundenbilder') : 'Noch keine Einträge';
+    }],
+    ['spiele', d => {
+      const n = (d.eintraege || []).length;
+      return n ? zahlwort(n, 'Spiel', 'Spiele') : 'Noch keine Einträge';
+    }]
+  ];
+
+  for (const [name, beschriften] of bereiche) {
+    try {
+      const antwort = await apiRufen('GET', name);
+      setze('zahl-' + name, beschriften(antwort.daten || {}));
+    } catch (e) {
+      setze('zahl-' + name, 'nicht abrufbar');
+      fehlerText = e.klartext || 'Der Server ist gerade nicht erreichbar.';
+      if (e.art === 'anmeldung') { warnungZeigen(fehlerText, true); break; }
+    }
+  }
+
+  if (fehlerText) {
+    Status.setze('Nicht verbunden', 'fehler');
+    if (!document.getElementById('warnband')) warnungZeigen(fehlerText, false);
+  } else {
+    Status.setze('Alles geladen', 'ok');
+  }
+})();
+</script>
+
+</body>
+</html>

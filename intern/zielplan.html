@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Zielplan – Intern | Primär Sportprojekte</title>
+<link rel="stylesheet" href="gemeinsam.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kopfzeile">
+      <a class="logo" href="index.html">Primär<span>Sport</span>projekte<em>intern</em></a>
+      <div id="status" class="status">Lädt …</div>
+    </div>
+    <nav class="bereiche">
+      <a href="index.html">Übersicht</a>
+      <a href="zielplan.html">Zielplan</a>
+      <a href="stundenbilder.html">Notizen &amp; Stundenbilder</a>
+      <a href="spiele.html">Spieledatenbank</a>
+      <a href="/">↗ Öffentliche Website</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="seitenkopf">
+    <h1>Zielplan</h1>
+    <p>Deine vier Phasen. Meilensteine hinzufügen, abhaken, anpassen — der Fortschritt
+       rechnet sich von selbst. Alles wird sofort gespeichert.</p>
+  </div>
+
+  <div id="phasen"></div>
+
+  <div class="phase" style="border-left-color:var(--accent)">
+    <h2>Monatlicher Rückblick</h2>
+    <p class="fortschritt-text" style="margin-bottom:10px">Was ist gelungen, was hakt, was nehme ich mir für den nächsten Monat vor?</p>
+    <textarea id="rueckblick" rows="9" placeholder="z. B.&#10;Juli 2026&#10;— Gelungen: erste Vertretungsstunde gehalten&#10;— Offen: Skript für Einheit 3&#10;— Nächster Monat: Termin mit dem Institut fixieren"></textarea>
+  </div>
+
+  <div class="sicherung">
+    <h3>Sicherung dieses Bereichs</h3>
+    <p>Lädt den kompletten Zielplan als JSON-Datei herunter oder spielt eine
+       frühere Sicherung wieder ein.</p>
+    <div class="knoepfe">
+      <button class="btn sand" id="btn-download">⬇ Als Datei sichern</button>
+      <button class="btn ghost" id="btn-import">⬆ Sicherung einspielen</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- Dialog: Meilenstein -->
+<dialog id="dlg-meilenstein">
+  <form method="dialog" id="form-meilenstein">
+    <div class="dialog-kopf">
+      <h2 id="dlg-meilenstein-titel">Meilenstein</h2>
+      <button type="button" class="ikon-btn" onclick="dialogSchliessen('dlg-meilenstein')" aria-label="Schließen">✕</button>
+    </div>
+    <div class="dialog-inhalt">
+      <label for="ms-text">Meilenstein</label>
+      <textarea id="ms-text" rows="2" required placeholder="z. B. Gespräch mit der Institutsleitung führen"></textarea>
+      <div class="feldpaar">
+        <div>
+          <label for="ms-frist">Zieldatum <span class="hinweis">(optional)</span></label>
+          <input type="date" id="ms-frist">
+        </div>
+        <div>
+          <label for="ms-phase">Phase</label>
+          <select id="ms-phase"></select>
+        </div>
+      </div>
+      <label for="ms-notiz">Notiz <span class="hinweis">(optional)</span></label>
+      <textarea id="ms-notiz" rows="3" placeholder="Details, nächster Schritt, Ansprechpartner …"></textarea>
+    </div>
+    <div class="dialog-fuss">
+      <button type="button" class="btn gefahr links" id="ms-loeschen">Löschen</button>
+      <button type="button" class="btn ghost" onclick="dialogSchliessen('dlg-meilenstein')">Abbrechen</button>
+      <button type="submit" class="btn">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Dialog: Phase bearbeiten -->
+<dialog id="dlg-phase">
+  <form method="dialog" id="form-phase">
+    <div class="dialog-kopf">
+      <h2>Phase bearbeiten</h2>
+      <button type="button" class="ikon-btn" onclick="dialogSchliessen('dlg-phase')" aria-label="Schließen">✕</button>
+    </div>
+    <div class="dialog-inhalt">
+      <label for="ph-titel">Titel</label>
+      <input type="text" id="ph-titel" required>
+      <label for="ph-beschreibung">Beschreibung <span class="hinweis">(optional)</span></label>
+      <textarea id="ph-beschreibung" rows="3" placeholder="Worum geht es in dieser Phase?"></textarea>
+    </div>
+    <div class="dialog-fuss">
+      <button type="button" class="btn ghost" onclick="dialogSchliessen('dlg-phase')">Abbrechen</button>
+      <button type="submit" class="btn">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    <div>Interner Bereich · Primär Sportprojekte</div>
+    <div>Angemeldet als <span id="angemeldet">—</span></div>
+  </div>
+</footer>
+
+<script src="gemeinsam.js"></script>
+<script>
+const phasenBox = document.getElementById('phasen');
+const rueckblickFeld = document.getElementById('rueckblick');
+
+let offenePhase = null;      // Phase, die gerade im Dialog bearbeitet wird
+let offenerMeilenstein = null;
+
+/* ── Darstellung ────────────────────────────────────────────────── */
+
+function zeichnen() {
+  const phasen = Daten.inhalt.phasen || [];
+
+  phasenBox.innerHTML = phasen.map(phase => {
+    const ms = phase.meilensteine || [];
+    const fertig = ms.filter(m => m.erledigt).length;
+    const prozent = ms.length ? Math.round(fertig / ms.length * 100) : 0;
+    const alleFertig = ms.length > 0 && fertig === ms.length;
+
+    const liste = ms.length ? ms.map(m => `
+      <div class="meilenstein${m.erledigt ? ' erledigt' : ''}">
+        <input type="checkbox" ${m.erledigt ? 'checked' : ''}
+               data-tun="haken" data-phase="${esc(phase.id)}" data-id="${esc(m.id)}"
+               aria-label="Meilenstein erledigt">
+        <div class="text">
+          ${escZeilen(m.text)}
+          ${m.notiz ? `<span class="hinweis" style="display:block">${escZeilen(m.notiz)}</span>` : ''}
+          ${m.frist ? `<span class="frist">Ziel: ${esc(datumHuebsch(m.frist))}${
+              !m.erledigt && m.frist < heuteIso() ? ' — überfällig' : ''}</span>` : ''}
+          ${m.erledigt && m.erledigtAm ? `<span class="hinweis" style="display:block">erledigt am ${esc(datumHuebsch(m.erledigtAm))}</span>` : ''}
+        </div>
+        <div class="werkzeuge">
+          <button class="ikon-btn" data-tun="bearbeiten" data-phase="${esc(phase.id)}" data-id="${esc(m.id)}"
+                  title="Bearbeiten" aria-label="Bearbeiten">✎</button>
+        </div>
+      </div>`).join('')
+      : '<p class="hinweis" style="padding:12px 0">Noch keine Meilensteine — mit „+ Meilenstein" den ersten anlegen.</p>';
+
+    return `
+      <section class="phase${alleFertig ? ' fertig' : ''}">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+          <div style="flex:1;min-width:0">
+            <h2>${esc(phase.titel)}</h2>
+            ${phase.beschreibung ? `<p class="fortschritt-text">${escZeilen(phase.beschreibung)}</p>` : ''}
+          </div>
+          <button class="ikon-btn" data-tun="phase-bearbeiten" data-phase="${esc(phase.id)}"
+                  title="Phase bearbeiten" aria-label="Phase bearbeiten">✎</button>
+        </div>
+        <div class="balken${alleFertig ? ' voll' : ''}"><i style="width:${prozent}%"></i></div>
+        <div class="fortschritt-text">${fertig} von ${ms.length} erledigt · ${prozent} %</div>
+        <div style="margin-top:10px">${liste}</div>
+        <button class="btn klein ghost" data-tun="neu" data-phase="${esc(phase.id)}"
+                style="margin-top:12px">+ Meilenstein</button>
+      </section>`;
+  }).join('');
+
+  // Rückblick nur setzen, wenn gerade nicht getippt wird (sonst springt der Cursor).
+  if (document.activeElement !== rueckblickFeld) {
+    rueckblickFeld.value = Daten.inhalt.rueckblick || '';
+  }
+}
+
+/* ── Bedienung ──────────────────────────────────────────────────── */
+
+phasenBox.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-tun]');
+  if (!el) return;
+  const tun = el.dataset.tun;
+  const phase = (Daten.inhalt.phasen || []).find(p => p.id === el.dataset.phase);
+  if (!phase) return;
+
+  if (tun === 'haken') {
+    const m = (phase.meilensteine || []).find(x => x.id === el.dataset.id);
+    if (!m) return;
+    Daten.aendern(() => {
+      m.erledigt = el.checked;
+      m.erledigtAm = el.checked ? heuteIso() : null;
+    });
+  } else if (tun === 'neu') {
+    meilensteinDialog(phase.id, null);
+  } else if (tun === 'bearbeiten') {
+    meilensteinDialog(phase.id, el.dataset.id);
+  } else if (tun === 'phase-bearbeiten') {
+    offenePhase = phase;
+    document.getElementById('ph-titel').value = phase.titel || '';
+    document.getElementById('ph-beschreibung').value = phase.beschreibung || '';
+    dialogOeffnen('dlg-phase');
+  }
+});
+
+function meilensteinDialog(phasenId, meilensteinId) {
+  const phasen = Daten.inhalt.phasen || [];
+  document.getElementById('ms-phase').innerHTML =
+    phasen.map(p => `<option value="${esc(p.id)}"${p.id === phasenId ? ' selected' : ''}>${esc(p.titel)}</option>`).join('');
+
+  const phase = phasen.find(p => p.id === phasenId);
+  const m = meilensteinId && phase ? (phase.meilensteine || []).find(x => x.id === meilensteinId) : null;
+  offenerMeilenstein = m ? { phasenId, id: meilensteinId } : null;
+
+  document.getElementById('dlg-meilenstein-titel').textContent = m ? 'Meilenstein bearbeiten' : 'Neuer Meilenstein';
+  document.getElementById('ms-text').value  = m ? m.text  : '';
+  document.getElementById('ms-frist').value = m ? (m.frist || '') : '';
+  document.getElementById('ms-notiz').value = m ? (m.notiz || '') : '';
+  document.getElementById('ms-loeschen').style.display = m ? '' : 'none';
+
+  dialogOeffnen('dlg-meilenstein');
+}
+
+document.getElementById('form-meilenstein').addEventListener('submit', (e) => {
+  const text = document.getElementById('ms-text').value.trim();
+  if (!text) { e.preventDefault(); toast('Bitte einen Text für den Meilenstein eintragen.', true); return; }
+
+  const zielPhasenId = document.getElementById('ms-phase').value;
+  const frist = document.getElementById('ms-frist').value;
+  const notiz = document.getElementById('ms-notiz').value.trim();
+
+  Daten.aendern((d) => {
+    const zielPhase = d.phasen.find(p => p.id === zielPhasenId);
+    if (!zielPhase) return;
+    if (!zielPhase.meilensteine) zielPhase.meilensteine = [];
+
+    if (offenerMeilenstein) {
+      const altePhase = d.phasen.find(p => p.id === offenerMeilenstein.phasenId);
+      const index = altePhase.meilensteine.findIndex(x => x.id === offenerMeilenstein.id);
+      const alt = altePhase.meilensteine[index];
+      Object.assign(alt, { text, frist, notiz });
+      // Phase gewechselt? Dann umhängen.
+      if (altePhase.id !== zielPhasenId) {
+        altePhase.meilensteine.splice(index, 1);
+        zielPhase.meilensteine.push(alt);
+      }
+    } else {
+      zielPhase.meilensteine.push({
+        id: uid(), text, frist, notiz, erledigt: false, erledigtAm: null, angelegt: heuteIso()
+      });
+    }
+  });
+  offenerMeilenstein = null;
+});
+
+document.getElementById('ms-loeschen').addEventListener('click', () => {
+  if (!offenerMeilenstein) return;
+  if (!confirm('Diesen Meilenstein wirklich löschen?')) return;
+  const ziel = offenerMeilenstein;
+  Daten.aendern((d) => {
+    const phase = d.phasen.find(p => p.id === ziel.phasenId);
+    if (phase) phase.meilensteine = phase.meilensteine.filter(x => x.id !== ziel.id);
+  });
+  offenerMeilenstein = null;
+  dialogSchliessen('dlg-meilenstein');
+  toast('Meilenstein gelöscht.');
+});
+
+document.getElementById('form-phase').addEventListener('submit', (e) => {
+  const titel = document.getElementById('ph-titel').value.trim();
+  if (!titel) { e.preventDefault(); toast('Bitte einen Titel eintragen.', true); return; }
+  const beschreibung = document.getElementById('ph-beschreibung').value.trim();
+  const ziel = offenePhase;
+  Daten.aendern((d) => {
+    const p = d.phasen.find(x => x.id === ziel.id);
+    if (p) { p.titel = titel; p.beschreibung = beschreibung; }
+  });
+  offenePhase = null;
+});
+
+/* Rückblick: tippen speichert automatisch, ohne die Seite neu zu zeichnen. */
+rueckblickFeld.addEventListener('input', () => {
+  Daten.inhalt.rueckblick = rueckblickFeld.value;
+  Daten.offen = true;
+  Daten.merken();
+  Daten.planeSpeichern(1200);
+});
+rueckblickFeld.addEventListener('blur', () => { if (Daten.offen) Daten.speichern(); });
+
+/* Sicherung */
+document.getElementById('btn-download').addEventListener('click',
+  () => Sicherung.herunterladen('zielplan', Daten.inhalt));
+document.getElementById('btn-import').addEventListener('click',
+  () => Sicherung.einspielen('zielplan', zeichnen));
+
+/* Start */
+Daten.beiAenderung = zeichnen;
+Daten.oeffnen('zielplan');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Notizen &amp; Stundenbilder – Intern | Primär Sportprojekte</title>
+<link rel="stylesheet" href="gemeinsam.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kopfzeile">
+      <a class="logo" href="index.html">Primär<span>Sport</span>projekte<em>intern</em></a>
+      <div id="status" class="status">Lädt …</div>
+    </div>
+    <nav class="bereiche">
+      <a href="index.html">Übersicht</a>
+      <a href="zielplan.html">Zielplan</a>
+      <a href="stundenbilder.html">Notizen &amp; Stundenbilder</a>
+      <a href="spiele.html">Spieledatenbank</a>
+      <a href="/">↗ Öffentliche Website</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="seitenkopf">
+    <h1>Notizen &amp; Stundenbilder</h1>
+    <p>Deine psychomotorischen Stundenplanungen: Ablauf, Material, Ziel — und nach der
+       Einheit die Reflexion. Jedes Stundenbild lässt sich einzeln ausdrucken.</p>
+  </div>
+
+  <div class="toolbar">
+    <input type="search" id="suche" placeholder="Suchen: Titel, Ziel, Material, Ablauf …" aria-label="Suchen">
+    <select id="filter-alter" aria-label="Nach Altersgruppe filtern"></select>
+    <select id="filter-schwerpunkt" aria-label="Nach Förderschwerpunkt filtern"></select>
+    <button class="btn" id="btn-neu">+ Neues Stundenbild</button>
+  </div>
+
+  <div class="anzahl" id="anzahl"></div>
+  <div class="karten" id="liste"></div>
+
+  <div class="sicherung">
+    <h3>Sicherung dieses Bereichs</h3>
+    <p>Lädt alle Stundenbilder als JSON-Datei herunter oder spielt eine frühere Sicherung wieder ein.</p>
+    <div class="knoepfe">
+      <button class="btn sand" id="btn-download">⬇ Als Datei sichern</button>
+      <button class="btn ghost" id="btn-import">⬆ Sicherung einspielen</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- Dialog: bearbeiten -->
+<dialog id="dlg-bearbeiten">
+  <form method="dialog" id="form-eintrag">
+    <div class="dialog-kopf">
+      <h2 id="dlg-titel">Neues Stundenbild</h2>
+      <button type="button" class="ikon-btn" onclick="dialogSchliessen('dlg-bearbeiten')" aria-label="Schließen">✕</button>
+    </div>
+    <div class="dialog-inhalt">
+      <label for="f-titel">Titel</label>
+      <input type="text" id="f-titel" required placeholder="z. B. Bewegungsbaustelle mit Zeitungspapier">
+
+      <div class="feldpaar">
+        <div>
+          <label for="f-alter">Altersgruppe</label>
+          <select id="f-alter"></select>
+        </div>
+        <div>
+          <label for="f-gruppe">Gruppengröße</label>
+          <input type="text" id="f-gruppe" placeholder="z. B. 12–16 Kinder">
+        </div>
+      </div>
+
+      <div class="feldpaar">
+        <div>
+          <label for="f-dauer">Dauer</label>
+          <input type="text" id="f-dauer" placeholder="z. B. 50 Minuten">
+        </div>
+        <div>
+          <label for="f-datum">Datum der Durchführung <span class="hinweis">(optional)</span></label>
+          <input type="date" id="f-datum">
+        </div>
+      </div>
+
+      <label>Förderschwerpunkt <span class="hinweis">(mehrere möglich)</span></label>
+      <div class="kaestchen" id="f-schwerpunkte"></div>
+
+      <label for="f-ziel">Ziel</label>
+      <textarea id="f-ziel" rows="2" placeholder="Was sollen die Kinder in dieser Einheit erfahren?"></textarea>
+
+      <label for="f-material">Material</label>
+      <textarea id="f-material" rows="2" placeholder="z. B. 20 Zeitungen, 4 Weichbodenmatten, Musikanlage"></textarea>
+
+      <label for="f-einstieg">Ablauf — Einstieg</label>
+      <textarea id="f-einstieg" rows="3" placeholder="Ankommen, Begrüßungsritual, Aufwärmspiel …"></textarea>
+
+      <label for="f-hauptteil">Ablauf — Hauptteil</label>
+      <textarea id="f-hauptteil" rows="6" placeholder="Kernaufgabe, Stationen, Variationen …"></textarea>
+
+      <label for="f-ausklang">Ablauf — Ausklang</label>
+      <textarea id="f-ausklang" rows="3" placeholder="Ruhephase, Abschlussrunde, Verabschiedung …"></textarea>
+
+      <label for="f-reflexion">Reflexion nach der Durchführung</label>
+      <textarea id="f-reflexion" rows="4" placeholder="Was hat funktioniert? Was ändere ich beim nächsten Mal?"></textarea>
+
+      <label for="f-notizen">Freie Notizen</label>
+      <textarea id="f-notizen" rows="3"></textarea>
+    </div>
+    <div class="dialog-fuss">
+      <button type="button" class="btn gefahr links" id="btn-loeschen">Löschen</button>
+      <button type="button" class="btn ghost" onclick="dialogSchliessen('dlg-bearbeiten')">Abbrechen</button>
+      <button type="submit" class="btn">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Dialog: ansehen -->
+<dialog id="dlg-ansicht">
+  <div class="dialog-kopf">
+    <h2 id="ansicht-titel">Stundenbild</h2>
+    <button type="button" class="ikon-btn" onclick="dialogSchliessen('dlg-ansicht')" aria-label="Schließen">✕</button>
+  </div>
+  <div class="dialog-inhalt" id="ansicht-inhalt"></div>
+  <div class="dialog-fuss">
+    <button type="button" class="btn ghost links" id="btn-ansicht-drucken">🖨 Drucken</button>
+    <button type="button" class="btn ghost" onclick="dialogSchliessen('dlg-ansicht')">Schließen</button>
+    <button type="button" class="btn" id="btn-ansicht-bearbeiten">Bearbeiten</button>
+  </div>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    <div>Interner Bereich · Primär Sportprojekte</div>
+    <div>Angemeldet als <span id="angemeldet">—</span></div>
+  </div>
+</footer>
+
+<script src="gemeinsam.js"></script>
+<script>
+const liste  = document.getElementById('liste');
+const anzahl = document.getElementById('anzahl');
+const suche  = document.getElementById('suche');
+const fAlter = document.getElementById('filter-alter');
+const fSchwerpunkt = document.getElementById('filter-schwerpunkt');
+
+let offeneId = null;   // Eintrag im Bearbeiten-Dialog
+
+/* Auswahllisten füllen */
+fAlter.innerHTML = optionen(ALTERSGRUPPEN, '', 'Alle Altersgruppen');
+fSchwerpunkt.innerHTML = optionen(SCHWERPUNKTE, '', 'Alle Förderschwerpunkte');
+document.getElementById('f-alter').innerHTML = optionen(ALTERSGRUPPEN, '', '— bitte wählen —');
+document.getElementById('f-schwerpunkte').innerHTML = SCHWERPUNKTE.map((s, i) =>
+  `<label><input type="checkbox" value="${esc(s)}" id="f-sp-${i}">${esc(s)}</label>`).join('');
+
+/* ── Darstellung ────────────────────────────────────────────────── */
+
+function gefiltert() {
+  const q = suche.value.trim().toLowerCase();
+  const a = fAlter.value;
+  const s = fSchwerpunkt.value;
+  return (Daten.inhalt.eintraege || [])
+    .filter(e => (!a || e.altersgruppe === a))
+    .filter(e => (!s || (e.schwerpunkte || []).includes(s)))
+    .filter(e => !q || [e.titel, e.ziel, e.material, e.einstieg, e.hauptteil, e.ausklang,
+                        e.reflexion, e.notizen, e.gruppengroesse, e.altersgruppe,
+                        (e.schwerpunkte || []).join(' ')]
+                        .join(' ').toLowerCase().includes(q))
+    .sort((x, y) => String(y.geaendert || '').localeCompare(String(x.geaendert || '')));
+}
+
+function zeichnen() {
+  const alle = Daten.inhalt.eintraege || [];
+  const treffer = gefiltert();
+
+  anzahl.textContent = alle.length === 0 ? ''
+    : (treffer.length === alle.length
+        ? alle.length + (alle.length === 1 ? ' Stundenbild' : ' Stundenbilder')
+        : treffer.length + ' von ' + alle.length + ' Stundenbildern');
+
+  if (!alle.length) {
+    liste.innerHTML = `<div class="leer" style="grid-column:1/-1">
+      <strong>Noch keine Stundenbilder</strong>
+      Lege dein erstes psychomotorisches Stundenbild an — mit Ablauf, Material und Ziel.
+      <div style="margin-top:16px"><button class="btn" onclick="neuOeffnen()">+ Neues Stundenbild</button></div>
+    </div>`;
+    return;
+  }
+  if (!treffer.length) {
+    liste.innerHTML = `<div class="leer" style="grid-column:1/-1">
+      <strong>Nichts gefunden</strong>Für diese Suche gibt es kein Stundenbild.</div>`;
+    return;
+  }
+
+  liste.innerHTML = treffer.map(e => `
+    <article class="karte">
+      <div>
+        <h3>${esc(e.titel)}</h3>
+        <div class="meta">${[e.altersgruppe, e.gruppengroesse, e.dauer].filter(Boolean).map(esc).join(' · ') || 'ohne Angaben'}</div>
+      </div>
+      <div>${(e.schwerpunkte || []).map(s => `<span class="chip">${esc(s)}</span>`).join('')}
+           ${e.reflexion ? '<span class="chip sand">reflektiert</span>' : ''}</div>
+      ${e.ziel ? `<p style="font-size:.92rem;color:var(--grey)">${esc(kurz(e.ziel, 130))}</p>` : ''}
+      <div class="aktionen">
+        <button class="btn klein ghost" data-tun="ansehen" data-id="${esc(e.id)}">Ansehen</button>
+        <button class="btn klein ghost" data-tun="bearbeiten" data-id="${esc(e.id)}">Bearbeiten</button>
+        <button class="ikon-btn" data-tun="drucken" data-id="${esc(e.id)}" title="Drucken" aria-label="Drucken">🖨</button>
+        <button class="ikon-btn" data-tun="loeschen" data-id="${esc(e.id)}" title="Löschen" aria-label="Löschen">🗑</button>
+      </div>
+    </article>`).join('');
+}
+
+function kurz(text, max) {
+  const t = String(text || '').replace(/\s+/g, ' ').trim();
+  return t.length > max ? t.slice(0, max) + ' …' : t;
+}
+
+/** Vollansicht — wird für den Dialog und für den Druck verwendet. */
+function detailHtml(e, fuerDruck) {
+  const block = (titel, inhalt) => inhalt
+    ? `<div class="abschnitt"><h4>${esc(titel)}</h4><p>${escZeilen(inhalt)}</p></div>` : '';
+  const kopf = fuerDruck
+    ? `<h1>${esc(e.titel)}</h1>
+       <div class="meta">${[e.altersgruppe, e.gruppengroesse, e.dauer].filter(Boolean).map(esc).join(' · ')}
+       ${e.datum ? ' · durchgeführt am ' + esc(datumHuebsch(e.datum)) : ''}</div>
+       <div>${(e.schwerpunkte || []).map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>`
+    : `<div class="meta" style="margin-bottom:10px">${[e.altersgruppe, e.gruppengroesse, e.dauer].filter(Boolean).map(esc).join(' · ')}
+       ${e.datum ? ' · durchgeführt am ' + esc(datumHuebsch(e.datum)) : ''}</div>
+       <div style="margin-bottom:14px">${(e.schwerpunkte || []).map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>`;
+
+  return kopf +
+    block('Ziel', e.ziel) +
+    block('Material', e.material) +
+    block('Einstieg', e.einstieg) +
+    block('Hauptteil', e.hauptteil) +
+    block('Ausklang', e.ausklang) +
+    block('Reflexion', e.reflexion) +
+    block('Notizen', e.notizen);
+}
+
+/* ── Bedienung ──────────────────────────────────────────────────── */
+
+liste.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-tun]');
+  if (!el) return;
+  const eintrag = (Daten.inhalt.eintraege || []).find(x => x.id === el.dataset.id);
+  if (!eintrag) return;
+
+  if (el.dataset.tun === 'ansehen')      ansehen(eintrag);
+  else if (el.dataset.tun === 'bearbeiten') bearbeiten(eintrag);
+  else if (el.dataset.tun === 'drucken')    drucken(detailHtml(eintrag, true));
+  else if (el.dataset.tun === 'loeschen')   loeschen(eintrag);
+});
+
+function ansehen(e) {
+  document.getElementById('ansicht-titel').textContent = e.titel;
+  document.getElementById('ansicht-inhalt').innerHTML = detailHtml(e, false);
+  document.getElementById('btn-ansicht-drucken').onclick = () => {
+    dialogSchliessen('dlg-ansicht');
+    setTimeout(() => drucken(detailHtml(e, true)), 120);
+  };
+  document.getElementById('btn-ansicht-bearbeiten').onclick = () => {
+    dialogSchliessen('dlg-ansicht');
+    setTimeout(() => bearbeiten(e), 120);
+  };
+  dialogOeffnen('dlg-ansicht');
+}
+
+function neuOeffnen() { bearbeiten(null); }
+document.getElementById('btn-neu').addEventListener('click', neuOeffnen);
+
+function bearbeiten(e) {
+  offeneId = e ? e.id : null;
+  document.getElementById('dlg-titel').textContent = e ? 'Stundenbild bearbeiten' : 'Neues Stundenbild';
+  document.getElementById('f-titel').value     = e ? e.titel || '' : '';
+  document.getElementById('f-alter').value     = e ? e.altersgruppe || '' : '';
+  document.getElementById('f-gruppe').value    = e ? e.gruppengroesse || '' : '';
+  document.getElementById('f-dauer').value     = e ? e.dauer || '' : '';
+  document.getElementById('f-datum').value     = e ? e.datum || '' : '';
+  document.getElementById('f-ziel').value      = e ? e.ziel || '' : '';
+  document.getElementById('f-material').value  = e ? e.material || '' : '';
+  document.getElementById('f-einstieg').value  = e ? e.einstieg || '' : '';
+  document.getElementById('f-hauptteil').value = e ? e.hauptteil || '' : '';
+  document.getElementById('f-ausklang').value  = e ? e.ausklang || '' : '';
+  document.getElementById('f-reflexion').value = e ? e.reflexion || '' : '';
+  document.getElementById('f-notizen').value   = e ? e.notizen || '' : '';
+  SCHWERPUNKTE.forEach((s, i) => {
+    document.getElementById('f-sp-' + i).checked = e ? (e.schwerpunkte || []).includes(s) : false;
+  });
+  document.getElementById('btn-loeschen').style.display = e ? '' : 'none';
+  dialogOeffnen('dlg-bearbeiten');
+}
+
+document.getElementById('form-eintrag').addEventListener('submit', (ev) => {
+  const titel = document.getElementById('f-titel').value.trim();
+  if (!titel) { ev.preventDefault(); toast('Bitte einen Titel eintragen.', true); return; }
+
+  const werte = {
+    titel,
+    altersgruppe:   document.getElementById('f-alter').value,
+    gruppengroesse: document.getElementById('f-gruppe').value.trim(),
+    dauer:          document.getElementById('f-dauer').value.trim(),
+    datum:          document.getElementById('f-datum').value,
+    ziel:           document.getElementById('f-ziel').value.trim(),
+    material:       document.getElementById('f-material').value.trim(),
+    einstieg:       document.getElementById('f-einstieg').value.trim(),
+    hauptteil:      document.getElementById('f-hauptteil').value.trim(),
+    ausklang:       document.getElementById('f-ausklang').value.trim(),
+    reflexion:      document.getElementById('f-reflexion').value.trim(),
+    notizen:        document.getElementById('f-notizen').value.trim(),
+    schwerpunkte:   SCHWERPUNKTE.filter((s, i) => document.getElementById('f-sp-' + i).checked),
+    geaendert:      new Date().toISOString()
+  };
+
+  const id = offeneId;
+  Daten.aendern((d) => {
+    if (!d.eintraege) d.eintraege = [];
+    if (id) {
+      const alt = d.eintraege.find(x => x.id === id);
+      if (alt) Object.assign(alt, werte);
+    } else {
+      d.eintraege.unshift({ id: uid(), angelegt: new Date().toISOString(), ...werte });
+    }
+  });
+  offeneId = null;
+  toast(id ? 'Stundenbild aktualisiert.' : 'Stundenbild angelegt.');
+});
+
+document.getElementById('btn-loeschen').addEventListener('click', () => {
+  const eintrag = (Daten.inhalt.eintraege || []).find(x => x.id === offeneId);
+  if (!eintrag) return;
+  dialogSchliessen('dlg-bearbeiten');
+  loeschen(eintrag);
+});
+
+function loeschen(e) {
+  if (!confirm('„' + e.titel + '" wirklich löschen?\n\nDas lässt sich nur über eine Sicherungsdatei rückgängig machen.')) return;
+  Daten.aendern((d) => { d.eintraege = (d.eintraege || []).filter(x => x.id !== e.id); });
+  offeneId = null;
+  toast('Stundenbild gelöscht.');
+}
+
+/* Suche und Filter */
+suche.addEventListener('input', zeichnen);
+fAlter.addEventListener('change', zeichnen);
+fSchwerpunkt.addEventListener('change', zeichnen);
+
+/* Sicherung */
+document.getElementById('btn-download').addEventListener('click',
+  () => Sicherung.herunterladen('stundenbilder', Daten.inhalt));
+document.getElementById('btn-import').addEventListener('click',
+  () => Sicherung.einspielen('stundenbilder', zeichnen));
+
+/* Start */
+Daten.beiAenderung = zeichnen;
+Daten.oeffnen('stundenbilder').then(() => {
+  // Kommt jemand von der Spieledatenbank mit „ins Stundenbild übernehmen"?
+  const id = new URLSearchParams(location.search).get('oeffnen');
+  if (id) {
+    const e = (Daten.inhalt.eintraege || []).find(x => x.id === id);
+    if (e) ansehen(e);
+    history.replaceState(null, '', location.pathname);
+  }
+});
+</script>
+
+</body>
+</html>

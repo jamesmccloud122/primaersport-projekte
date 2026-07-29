@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Spieledatenbank – Intern | Primär Sportprojekte</title>
+<link rel="stylesheet" href="gemeinsam.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kopfzeile">
+      <a class="logo" href="index.html">Primär<span>Sport</span>projekte<em>intern</em></a>
+      <div id="status" class="status">Lädt …</div>
+    </div>
+    <nav class="bereiche">
+      <a href="index.html">Übersicht</a>
+      <a href="zielplan.html">Zielplan</a>
+      <a href="stundenbilder.html">Notizen &amp; Stundenbilder</a>
+      <a href="spiele.html">Spieledatenbank</a>
+      <a href="/">↗ Öffentliche Website</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="seitenkopf">
+    <h1>Spieledatenbank</h1>
+    <p>Deine Sammlung an Spielen und Übungen. Jedes Spiel lässt sich mit einem Klick
+       in ein Stundenbild übernehmen.</p>
+  </div>
+
+  <div class="toolbar">
+    <input type="search" id="suche" placeholder="Suchen: Name, Material, Ablauf …" aria-label="Suchen">
+    <select id="filter-kategorie" aria-label="Nach Kategorie filtern"></select>
+    <select id="filter-alter" aria-label="Nach Altersgruppe filtern"></select>
+    <button class="btn" id="btn-neu">+ Neues Spiel</button>
+  </div>
+
+  <div class="anzahl" id="anzahl"></div>
+  <div class="karten" id="liste"></div>
+
+  <div class="sicherung">
+    <h3>Sicherung dieses Bereichs</h3>
+    <p>Lädt alle Spiele als JSON-Datei herunter oder spielt eine frühere Sicherung wieder ein.</p>
+    <div class="knoepfe">
+      <button class="btn sand" id="btn-download">⬇ Als Datei sichern</button>
+      <button class="btn ghost" id="btn-import">⬆ Sicherung einspielen</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- Dialog: bearbeiten -->
+<dialog id="dlg-bearbeiten">
+  <form method="dialog" id="form-eintrag">
+    <div class="dialog-kopf">
+      <h2 id="dlg-titel">Neues Spiel</h2>
+      <button type="button" class="ikon-btn" onclick="dialogSchliessen('dlg-bearbeiten')" aria-label="Schließen">✕</button>
+    </div>
+    <div class="dialog-inhalt">
+      <label for="f-name">Name</label>
+      <input type="text" id="f-name" required placeholder="z. B. Zeitungsdschungel">
+
+      <div class="feldpaar">
+        <div>
+          <label for="f-kategorie">Kategorie</label>
+          <select id="f-kategorie"></select>
+        </div>
+        <div>
+          <label for="f-alter">Altersgruppe</label>
+          <select id="f-alter"></select>
+        </div>
+      </div>
+
+      <label for="f-gruppe">Gruppengröße</label>
+      <input type="text" id="f-gruppe" placeholder="z. B. ab 6 Kinder">
+
+      <label for="f-material">Material</label>
+      <textarea id="f-material" rows="2" placeholder="z. B. alte Zeitungen, Wäscheklammern"></textarea>
+
+      <label for="f-ablauf">Ablauf</label>
+      <textarea id="f-ablauf" rows="6" placeholder="Wie läuft das Spiel ab?"></textarea>
+
+      <label for="f-variationen">Variationen</label>
+      <textarea id="f-variationen" rows="3" placeholder="Leichter, schwerer, mit Musik, in Paaren …"></textarea>
+
+      <label for="f-sicherheit">Sicherheitshinweis</label>
+      <textarea id="f-sicherheit" rows="2" placeholder="Worauf ist zu achten?"></textarea>
+
+      <label for="f-quelle">Quelle</label>
+      <input type="text" id="f-quelle" placeholder="z. B. Fortbildung Motopädagogik 2025, Buch, eigene Idee">
+    </div>
+    <div class="dialog-fuss">
+      <button type="button" class="btn gefahr links" id="btn-loeschen">Löschen</button>
+      <button type="button" class="btn ghost" onclick="dialogSchliessen('dlg-bearbeiten')">Abbrechen</button>
+      <button type="submit" class="btn">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Dialog: ansehen -->
+<dialog id="dlg-ansicht">
+  <div class="dialog-kopf">
+    <h2 id="ansicht-titel">Spiel</h2>
+    <button type="button" class="ikon-btn" onclick="dialogSchliessen('dlg-ansicht')" aria-label="Schließen">✕</button>
+  </div>
+  <div class="dialog-inhalt" id="ansicht-inhalt"></div>
+  <div class="dialog-fuss">
+    <button type="button" class="btn ghost links" id="btn-ansicht-drucken">🖨 Drucken</button>
+    <button type="button" class="btn ghost" onclick="dialogSchliessen('dlg-ansicht')">Schließen</button>
+    <button type="button" class="btn" id="btn-ansicht-bearbeiten">Bearbeiten</button>
+  </div>
+</dialog>
+
+<!-- Dialog: ins Stundenbild übernehmen -->
+<dialog id="dlg-uebernehmen">
+  <form method="dialog" id="form-uebernehmen">
+    <div class="dialog-kopf">
+      <h2>Ins Stundenbild übernehmen</h2>
+      <button type="button" class="ikon-btn" onclick="dialogSchliessen('dlg-uebernehmen')" aria-label="Schließen">✕</button>
+    </div>
+    <div class="dialog-inhalt">
+      <p style="color:var(--grey);font-size:.92rem" id="ue-info"></p>
+
+      <label for="ue-ziel">Wohin?</label>
+      <select id="ue-ziel"><option value="neu">➕ Neues Stundenbild anlegen</option></select>
+
+      <div id="ue-neu-felder">
+        <label for="ue-titel">Titel des neuen Stundenbilds</label>
+        <input type="text" id="ue-titel">
+      </div>
+
+      <label for="ue-abschnitt">In welchen Abschnitt?</label>
+      <select id="ue-abschnitt">
+        <option value="hauptteil">Hauptteil</option>
+        <option value="einstieg">Einstieg</option>
+        <option value="ausklang">Ausklang</option>
+      </select>
+
+      <p class="hinweis">Ablauf, Variationen und Sicherheitshinweis werden an den gewählten
+         Abschnitt angehängt, das Material an die Materialliste.</p>
+    </div>
+    <div class="dialog-fuss">
+      <button type="button" class="btn ghost" onclick="dialogSchliessen('dlg-uebernehmen')">Abbrechen</button>
+      <button type="submit" class="btn" id="ue-senden">Übernehmen</button>
+    </div>
+  </form>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    <div>Interner Bereich · Primär Sportprojekte</div>
+    <div>Angemeldet als <span id="angemeldet">—</span></div>
+  </div>
+</footer>
+
+<script src="gemeinsam.js"></script>
+<script>
+const liste  = document.getElementById('liste');
+const anzahl = document.getElementById('anzahl');
+const suche  = document.getElementById('suche');
+const fKategorie = document.getElementById('filter-kategorie');
+const fAlter = document.getElementById('filter-alter');
+
+let offeneId = null;
+let uebernahmeSpiel = null;
+
+/* Auswahllisten füllen */
+fKategorie.innerHTML = optionen(SPIEL_KATEGORIEN, '', 'Alle Kategorien');
+fAlter.innerHTML     = optionen(ALTERSGRUPPEN, '', 'Alle Altersgruppen');
+document.getElementById('f-kategorie').innerHTML = optionen(SPIEL_KATEGORIEN, '', '— bitte wählen —');
+document.getElementById('f-alter').innerHTML     = optionen(ALTERSGRUPPEN, '', '— bitte wählen —');
+
+/* ── Darstellung ────────────────────────────────────────────────── */
+
+function gefiltert() {
+  const q = suche.value.trim().toLowerCase();
+  const k = fKategorie.value;
+  const a = fAlter.value;
+  return (Daten.inhalt.eintraege || [])
+    .filter(e => (!k || e.kategorie === k))
+    .filter(e => (!a || e.altersgruppe === a))
+    .filter(e => !q || [e.name, e.material, e.ablauf, e.variationen, e.sicherheit, e.quelle,
+                        e.kategorie, e.altersgruppe, e.gruppengroesse]
+                        .join(' ').toLowerCase().includes(q))
+    .sort((x, y) => String(x.name || '').localeCompare(String(y.name || ''), 'de'));
+}
+
+function zeichnen() {
+  const alle = Daten.inhalt.eintraege || [];
+  const treffer = gefiltert();
+
+  anzahl.textContent = alle.length === 0 ? ''
+    : (treffer.length === alle.length
+        ? alle.length + (alle.length === 1 ? ' Spiel' : ' Spiele')
+        : treffer.length + ' von ' + alle.length + ' Spielen');
+
+  if (!alle.length) {
+    liste.innerHTML = `<div class="leer" style="grid-column:1/-1">
+      <strong>Noch keine Spiele</strong>
+      Trag dein erstes Spiel ein — mit Ablauf, Material und Variationen.
+      <div style="margin-top:16px"><button class="btn" onclick="neuOeffnen()">+ Neues Spiel</button></div>
+    </div>`;
+    return;
+  }
+  if (!treffer.length) {
+    liste.innerHTML = `<div class="leer" style="grid-column:1/-1">
+      <strong>Nichts gefunden</strong>Für diese Suche gibt es kein Spiel.</div>`;
+    return;
+  }
+
+  liste.innerHTML = treffer.map(e => `
+    <article class="karte">
+      <div>
+        <h3>${esc(e.name)}</h3>
+        <div class="meta">${[e.altersgruppe, e.gruppengroesse].filter(Boolean).map(esc).join(' · ') || 'ohne Angaben'}</div>
+      </div>
+      <div>${e.kategorie ? `<span class="chip">${esc(e.kategorie)}</span>` : ''}
+           ${e.sicherheit ? '<span class="chip sand">Sicherheitshinweis</span>' : ''}</div>
+      ${e.ablauf ? `<p style="font-size:.92rem;color:var(--grey)">${esc(kurz(e.ablauf, 130))}</p>` : ''}
+      <div class="aktionen">
+        <button class="btn klein ghost" data-tun="ansehen" data-id="${esc(e.id)}">Ansehen</button>
+        <button class="btn klein ghost" data-tun="uebernehmen" data-id="${esc(e.id)}">→ Ins Stundenbild</button>
+        <button class="ikon-btn" data-tun="bearbeiten" data-id="${esc(e.id)}" title="Bearbeiten" aria-label="Bearbeiten">✎</button>
+        <button class="ikon-btn" data-tun="loeschen" data-id="${esc(e.id)}" title="Löschen" aria-label="Löschen">🗑</button>
+      </div>
+    </article>`).join('');
+}
+
+function kurz(text, max) {
+  const t = String(text || '').replace(/\s+/g, ' ').trim();
+  return t.length > max ? t.slice(0, max) + ' …' : t;
+}
+
+function detailHtml(e, fuerDruck) {
+  const block = (titel, inhalt) => inhalt
+    ? `<div class="abschnitt"><h4>${esc(titel)}</h4><p>${escZeilen(inhalt)}</p></div>` : '';
+  const meta = [e.altersgruppe, e.gruppengroesse].filter(Boolean).map(esc).join(' · ');
+  const kopf = fuerDruck
+    ? `<h1>${esc(e.name)}</h1><div class="meta">${meta}</div>
+       <div>${e.kategorie ? `<span class="chip">${esc(e.kategorie)}</span>` : ''}</div>`
+    : `<div class="meta" style="margin-bottom:10px">${meta}</div>
+       <div style="margin-bottom:14px">${e.kategorie ? `<span class="chip">${esc(e.kategorie)}</span>` : ''}</div>`;
+
+  return kopf +
+    block('Material', e.material) +
+    block('Ablauf', e.ablauf) +
+    block('Variationen', e.variationen) +
+    block('Sicherheitshinweis', e.sicherheit) +
+    block('Quelle', e.quelle);
+}
+
+/* ── Bedienung ──────────────────────────────────────────────────── */
+
+liste.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-tun]');
+  if (!el) return;
+  const eintrag = (Daten.inhalt.eintraege || []).find(x => x.id === el.dataset.id);
+  if (!eintrag) return;
+
+  if (el.dataset.tun === 'ansehen')          ansehen(eintrag);
+  else if (el.dataset.tun === 'bearbeiten')  bearbeiten(eintrag);
+  else if (el.dataset.tun === 'loeschen')    loeschen(eintrag);
+  else if (el.dataset.tun === 'uebernehmen') uebernahmeOeffnen(eintrag);
+});
+
+function ansehen(e) {
+  document.getElementById('ansicht-titel').textContent = e.name;
+  document.getElementById('ansicht-inhalt').innerHTML = detailHtml(e, false);
+  document.getElementById('btn-ansicht-drucken').onclick = () => {
+    dialogSchliessen('dlg-ansicht');
+    setTimeout(() => drucken(detailHtml(e, true)), 120);
+  };
+  document.getElementById('btn-ansicht-bearbeiten').onclick = () => {
+    dialogSchliessen('dlg-ansicht');
+    setTimeout(() => bearbeiten(e), 120);
+  };
+  dialogOeffnen('dlg-ansicht');
+}
+
+function neuOeffnen() { bearbeiten(null); }
+document.getElementById('btn-neu').addEventListener('click', neuOeffnen);
+
+function bearbeiten(e) {
+  offeneId = e ? e.id : null;
+  document.getElementById('dlg-titel').textContent = e ? 'Spiel bearbeiten' : 'Neues Spiel';
+  document.getElementById('f-name').value        = e ? e.name || '' : '';
+  document.getElementById('f-kategorie').value    = e ? e.kategorie || '' : '';
+  document.getElementById('f-alter').value        = e ? e.altersgruppe || '' : '';
+  document.getElementById('f-gruppe').value       = e ? e.gruppengroesse || '' : '';
+  document.getElementById('f-material').value     = e ? e.material || '' : '';
+  document.getElementById('f-ablauf').value       = e ? e.ablauf || '' : '';
+  document.getElementById('f-variationen').value  = e ? e.variationen || '' : '';
+  document.getElementById('f-sicherheit').value   = e ? e.sicherheit || '' : '';
+  document.getElementById('f-quelle').value       = e ? e.quelle || '' : '';
+  document.getElementById('btn-loeschen').style.display = e ? '' : 'none';
+  dialogOeffnen('dlg-bearbeiten');
+}
+
+document.getElementById('form-eintrag').addEventListener('submit', (ev) => {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { ev.preventDefault(); toast('Bitte einen Namen eintragen.', true); return; }
+
+  const werte = {
+    name,
+    kategorie:      document.getElementById('f-kategorie').value,
+    altersgruppe:   document.getElementById('f-alter').value,
+    gruppengroesse: document.getElementById('f-gruppe').value.trim(),
+    material:       document.getElementById('f-material').value.trim(),
+    ablauf:         document.getElementById('f-ablauf').value.trim(),
+    variationen:    document.getElementById('f-variationen').value.trim(),
+    sicherheit:     document.getElementById('f-sicherheit').value.trim(),
+    quelle:         document.getElementById('f-quelle').value.trim(),
+    geaendert:      new Date().toISOString()
+  };
+
+  const id = offeneId;
+  Daten.aendern((d) => {
+    if (!d.eintraege) d.eintraege = [];
+    if (id) {
+      const alt = d.eintraege.find(x => x.id === id);
+      if (alt) Object.assign(alt, werte);
+    } else {
+      d.eintraege.push({ id: uid(), angelegt: new Date().toISOString(), ...werte });
+    }
+  });
+  offeneId = null;
+  toast(id ? 'Spiel aktualisiert.' : 'Spiel angelegt.');
+});
+
+document.getElementById('btn-loeschen').addEventListener('click', () => {
+  const eintrag = (Daten.inhalt.eintraege || []).find(x => x.id === offeneId);
+  if (!eintrag) return;
+  dialogSchliessen('dlg-bearbeiten');
+  loeschen(eintrag);
+});
+
+function loeschen(e) {
+  if (!confirm('„' + e.name + '" wirklich löschen?\n\nDas lässt sich nur über eine Sicherungsdatei rückgängig machen.')) return;
+  Daten.aendern((d) => { d.eintraege = (d.eintraege || []).filter(x => x.id !== e.id); });
+  offeneId = null;
+  toast('Spiel gelöscht.');
+}
+
+/* ── Übernahme in ein Stundenbild ───────────────────────────────── */
+
+const zielFeld = document.getElementById('ue-ziel');
+const neuFelder = document.getElementById('ue-neu-felder');
+
+zielFeld.addEventListener('change', () => {
+  neuFelder.style.display = zielFeld.value === 'neu' ? '' : 'none';
+});
+
+async function uebernahmeOeffnen(spiel) {
+  uebernahmeSpiel = spiel;
+  document.getElementById('ue-info').textContent = 'Spiel: ' + spiel.name;
+  document.getElementById('ue-titel').value = spiel.name;
+  zielFeld.innerHTML = '<option value="neu">➕ Neues Stundenbild anlegen</option>';
+  neuFelder.style.display = '';
+
+  dialogOeffnen('dlg-uebernehmen');
+
+  // Bestehende Stundenbilder zur Auswahl nachladen.
+  try {
+    const antwort = await apiRufen('GET', 'stundenbilder');
+    const eintraege = (antwort.daten && antwort.daten.eintraege) || [];
+    eintraege
+      .sort((x, y) => String(y.geaendert || '').localeCompare(String(x.geaendert || '')))
+      .forEach(e => {
+        const o = document.createElement('option');
+        o.value = e.id;
+        o.textContent = e.titel;
+        zielFeld.appendChild(o);
+      });
+  } catch (e) {
+    toast('Die vorhandenen Stundenbilder konnten nicht geladen werden: ' + (e.klartext || ''), true);
+  }
+}
+
+document.getElementById('form-uebernehmen').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  const spiel = uebernahmeSpiel;
+  if (!spiel) return;
+
+  const zielId    = zielFeld.value;
+  const abschnitt = document.getElementById('ue-abschnitt').value;
+  const neuTitel  = document.getElementById('ue-titel').value.trim() || spiel.name;
+
+  const knopf = document.getElementById('ue-senden');
+  knopf.disabled = true;
+  knopf.textContent = 'Übernehme …';
+
+  // Textbaustein aus dem Spiel bauen
+  const teile = ['▸ ' + spiel.name + (spiel.kategorie ? ' (' + spiel.kategorie + ')' : '')];
+  if (spiel.ablauf)      teile.push(spiel.ablauf);
+  if (spiel.variationen) teile.push('Variationen: ' + spiel.variationen);
+  if (spiel.sicherheit)  teile.push('Achtung: ' + spiel.sicherheit);
+  const baustein = teile.join('\n');
+
+  try {
+    const antwort = await apiRufen('GET', 'stundenbilder');
+    const daten = antwort.daten || { eintraege: [] };
+    if (!daten.eintraege) daten.eintraege = [];
+
+    let ziel;
+    if (zielId === 'neu') {
+      ziel = {
+        id: uid(), titel: neuTitel,
+        altersgruppe: spiel.altersgruppe || '', gruppengroesse: spiel.gruppengroesse || '',
+        dauer: '', datum: '', schwerpunkte: SCHWERPUNKTE.includes(spiel.kategorie) ? [spiel.kategorie] : [],
+        ziel: '', material: '', einstieg: '', hauptteil: '', ausklang: '',
+        reflexion: '', notizen: '', angelegt: new Date().toISOString()
+      };
+      daten.eintraege.unshift(ziel);
+    } else {
+      ziel = daten.eintraege.find(x => x.id === zielId);
+      if (!ziel) throw { klartext: 'Das gewählte Stundenbild gibt es nicht mehr.' };
+    }
+
+    ziel[abschnitt] = (ziel[abschnitt] ? ziel[abschnitt] + '\n\n' : '') + baustein;
+    if (spiel.material) {
+      ziel.material = (ziel.material ? ziel.material + '\n' : '') + spiel.material;
+    }
+    ziel.geaendert = new Date().toISOString();
+
+    await apiRufen('PUT', 'stundenbilder', { version: antwort.version, daten });
+
+    dialogSchliessen('dlg-uebernehmen');
+    toast('„' + spiel.name + '" wurde übernommen.');
+    setTimeout(() => {
+      if (confirm('Das Stundenbild „' + ziel.titel + '" wurde ergänzt.\n\nJetzt dorthin wechseln?')) {
+        location.href = 'stundenbilder.html?oeffnen=' + encodeURIComponent(ziel.id);
+      }
+    }, 400);
+  } catch (e) {
+    if (e.konflikt) {
+      toast('Ein anderes Gerät hat die Stundenbilder gerade geändert. Bitte noch einmal versuchen.', true);
+    } else {
+      toast('Das Übernehmen hat nicht geklappt: ' + (e.klartext || 'unbekannter Fehler'), true);
+    }
+  } finally {
+    knopf.disabled = false;
+    knopf.textContent = 'Übernehmen';
+    uebernahmeSpiel = null;
+  }
+});
+
+/* Suche und Filter */
+suche.addEventListener('input', zeichnen);
+fKategorie.addEventListener('change', zeichnen);
+fAlter.addEventListener('change', zeichnen);
+
+/* Sicherung */
+document.getElementById('btn-download').addEventListener('click',
+  () => Sicherung.herunterladen('spiele', Daten.inhalt));
+document.getElementById('btn-import').addEventListener('click',
+  () => Sicherung.einspielen('spiele', zeichnen));
+
+/* Start */
+Daten.beiAenderung = zeichnen;
+Daten.oeffnen('spiele');
+</script>
+
+</body>
+</html>

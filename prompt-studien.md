@@ -4,6 +4,21 @@ Du arbeitest im Projektordner der Website **primaersport-projekte.at**. Ziel ist
 die Wissensdatenbank um aktuelle wissenschaftliche Studien zu erweitern. Arbeite die
 folgenden Schritte der Reihe nach ab.
 
+## 0. Dein Auftrag hat einen engen Rand
+
+Du fasst in diesem Lauf **ausschliesslich `studien.js`** an. Sonst nichts.
+
+- **Raeume nichts auf.** Im Projektordner liegen Dateien und Ordner, die nicht zu
+  deiner Aufgabe gehoeren — unter anderem `functions/` (Serverteil von Cloudflare
+  Pages: `/api/data` und der Zugriffsschutz) und `intern/` (passwortgeschuetzter
+  Bereich). **Diese gehoeren zur Website und muessen im Repo bleiben.** Auch alles
+  andere, was du nicht kennst, laesst du unveraendert stehen.
+- **Aendere niemals `.gitignore`**, entferne nichts aus der Versionierung, loesche
+  keine Dateien und benenne nichts um.
+- Wirkt etwas fehl am Platz: **melde es in deiner Ausgabe**, aber greife nicht ein.
+- Committe nur `studien.js` — nie mit `git commit -a` oder `-am`, sondern immer
+  nur den zuvor mit `git add studien.js` vorbereiteten Stand.
+
 ## 1. Bestand einlesen
 
 Lies zuerst `studien.js`. Die Datei enthält ein Array `studies` mit bereits erfassten
