@@ -20,6 +20,7 @@
       <a href="zielplan.html">Zielplan</a>
       <a href="stundenbilder.html">Notizen &amp; Stundenbilder</a>
       <a href="spiele.html">Spieledatenbank</a>
+      <a href="dokumente.html">Dokumente</a>
       <a href="/">↗ Öffentliche Website</a>
     </nav>
   </div>
@@ -52,6 +53,12 @@
       <p>Deine Sammlung an Spielen und Übungen, sortiert nach Kategorie und Alter.</p>
       <span class="zahl" id="zahl-spiele">wird geladen …</span>
     </a>
+    <a class="kachel" href="dokumente.html" style="border-top-color:var(--accent)">
+      <span class="icon">📁</span>
+      <h2>Dokumente</h2>
+      <p>Konzepte, Vorlagen und Unterlagen aus dem Projekt Brennpunktschule und zum Unternehmen.</p>
+      <span class="zahl" id="zahl-dokumente">—</span>
+    </a>
   </div>
 
   <div class="sicherung">
@@ -74,8 +81,12 @@
 </footer>
 
 <script src="gemeinsam.js"></script>
+<script src="dokumente.js"></script>
 <script>
-/* Die Übersicht liest alle drei Bereiche, um die Anzahlen zu zeigen. */
+/* Die Übersicht liest alle drei Bereiche, um die Anzahlen zu zeigen.
+   Die Dokumente stehen als feste Liste in dokumente.js. */
+document.getElementById('zahl-dokumente').textContent =
+  dokumente.length + (dokumente.length === 1 ? ' Dokument' : ' Dokumente');
 
 const stunde = new Date().getHours();
 document.getElementById('gruss').textContent =

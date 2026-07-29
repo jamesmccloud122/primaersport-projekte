@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekt-Kurskatalog – Teambuilding für Schulklassen | Primär Sportprojekte</title>
+<meta name="description" content="Erlebnispädagogik und Teambuilding für Schulklassen: Piraten-Abenteuer, Diamantenraub, Klima-Detektive und Ninja-Warrior Kids. Projekte für Volksschule und Unterstufe in Graz und der Steiermark.">
+<link rel="canonical" href="https://primaersport-projekte.at/kurskatalog.html">
+<style>
+  :root{
+    --green:#2E6E4E; --green-dark:#1F4A35; --green-light:#E8F0EB;
+    --sand:#F7F4EE; --text:#28322D; --grey:#5C6660; --accent:#D98E32;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--text);line-height:1.6;background:#fff}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+
+  header{position:sticky;top:0;background:#fff;box-shadow:0 1px 8px rgba(0,0,0,.08);z-index:10}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+  .logo{font-weight:800;font-size:1.15rem;color:var(--green-dark);text-decoration:none}
+  .logo span{color:var(--accent)}
+  nav ul{display:flex;gap:22px;list-style:none;flex-wrap:wrap}
+  nav a{color:var(--text);text-decoration:none;font-size:.95rem}
+  nav a:hover{color:var(--green)}
+  .btn{display:inline-block;background:var(--green);color:#fff !important;padding:10px 22px;border-radius:28px;text-decoration:none;font-weight:600;border:none;font-size:1rem;cursor:pointer}
+  .btn:hover{background:var(--green-dark)}
+  .btn.ghost{background:transparent;color:var(--green) !important;border:2px solid var(--green)}
+  .btn.ghost:hover{background:var(--green-light)}
+  .btn.sand{background:var(--accent)}
+  .btn.sand:hover{background:#b87424}
+
+  .hero{background:linear-gradient(135deg,var(--green-light),var(--sand));padding:64px 0 56px}
+  .hero h1{font-size:clamp(1.7rem,4.5vw,2.7rem);color:var(--green-dark);line-height:1.2;margin-bottom:16px}
+  .hero p.lead{font-size:1.15rem;color:var(--grey);max-width:660px;margin-bottom:26px}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .badge{display:inline-block;background:#fff;border:1px solid var(--green);color:var(--green-dark);border-radius:20px;padding:4px 14px;font-size:.85rem;margin-bottom:18px}
+
+  section{padding:54px 0}
+  h2{color:var(--green-dark);font-size:1.7rem;margin-bottom:8px}
+  .sub{color:var(--grey);margin-bottom:32px;max-width:680px}
+
+  .vorwort{background:var(--green-light)}
+  .vorwort .grid{display:grid;grid-template-columns:2fr 1fr;gap:34px;align-items:start}
+  .vorwort p{margin-bottom:14px}
+  blockquote{border-left:4px solid var(--accent);padding:14px 20px;background:#fff;border-radius:0 12px 12px 0;
+             font-size:1.05rem;color:var(--green-dark);font-style:italic}
+  blockquote footer{margin-top:10px;font-style:normal;font-size:.88rem;color:var(--grey)}
+
+  .projekt{border:1px solid #E1E5E2;border-radius:16px;overflow:hidden;margin-bottom:28px;background:#fff}
+  .projekt > img{width:100%;max-height:280px;object-fit:cover;display:block;background:var(--green-light)}
+  .projekt .inhalt{padding:28px 26px}
+  .projekt h3{color:var(--green-dark);font-size:1.35rem;margin-bottom:4px}
+  .projekt .mission{color:var(--accent);font-weight:600;margin-bottom:14px}
+  .projekt > .inhalt > p{color:var(--grey);margin-bottom:20px}
+  .foerdert{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:22px}
+  .foerdert div{background:var(--sand);border-radius:10px;padding:14px 16px;border-left:3px solid var(--green)}
+  .foerdert strong{display:block;color:var(--green-dark);font-size:.95rem;margin-bottom:3px}
+  .foerdert span{font-size:.88rem;color:var(--grey)}
+  .eckdaten{display:flex;flex-wrap:wrap;gap:10px;border-top:1px solid #E1E5E2;padding-top:18px}
+  .eckdaten div{background:var(--green-light);border-radius:10px;padding:8px 14px;font-size:.88rem}
+  .eckdaten b{color:var(--green-dark);display:block;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em}
+
+  .anlaesse{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:26px}
+  .anlass{background:var(--sand);border-radius:14px;padding:24px 20px;border-top:4px solid var(--accent)}
+  .anlass .icon{font-size:1.8rem;display:block;margin-bottom:8px}
+  .anlass h3{color:var(--green-dark);font-size:1.05rem;margin-bottom:6px}
+  .anlass p{font-size:.92rem;color:var(--grey)}
+
+  .download{background:var(--green-dark);color:#fff;border-radius:16px;padding:34px 30px;display:flex;
+            flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between}
+  .download h2{color:#fff}
+  .download p{color:#DFEAE4;max-width:560px}
+
+  .malvorlagen{background:var(--sand)}
+  .bilderreihe{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:14px;margin-top:22px}
+  .bilderreihe a{background:#fff;border-radius:12px;padding:12px;display:flex;align-items:center;justify-content:center;
+                 border:1px solid #E1E5E2;transition:transform .12s}
+  .bilderreihe a:hover{transform:translateY(-3px);border-color:var(--green)}
+  .bilderreihe img{max-width:100%;height:70px;object-fit:contain}
+
+  footer{background:var(--green-dark);color:#CFE0D6;padding:28px 0;font-size:.88rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  footer a{color:#fff;text-decoration:none;margin-left:16px}
+
+  @media(max-width:720px){
+    .vorwort .grid{grid-template-columns:1fr}
+    nav ul{display:none}
+    .projekt .inhalt{padding:22px 18px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="index.html">Primär<span>Sport</span>projekte</a>
+      <ul>
+        <li><a href="index.html#angebote">Angebote</a></li>
+        <li><a href="kurskatalog.html">Kurskatalog</a></li>
+        <li><a href="wissensdatenbank.html">Wissensdatenbank</a></li>
+        <li><a href="index.html#ueber-mich">Über mich</a></li>
+      </ul>
+      <a class="btn" href="index.html#kontakt">Jetzt anfragen</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="badge">Projekte für Schulklassen · Volksschule &amp; Unterstufe</span>
+    <h1>Gemeinsam wachsen: Teambuilding, das Klassen zusammenschweißt.</h1>
+    <p class="lead">Vier Projekte, in denen aus einer Klasse ein Team wird — vom Piraten-Abenteuer über den
+       Diamantenraub bis zum Ninja-Parcours. Erlebnispädagogik auf dem Fundament von 30 Jahren Primärsport.</p>
+    <div class="cta">
+      <a class="btn" href="#projekte">Die vier Projekte ansehen</a>
+      <a class="btn ghost" href="kurskatalog/Primaersport-Projekte-Kurskatalog.pdf" target="_blank" rel="noopener">Katalog als PDF (8 MB)</a>
+    </div>
+  </div>
+</section>
+
+<section class="vorwort">
+  <div class="wrap">
+    <h2>Warum Teambuilding durch Bewegung?</h2>
+    <div class="grid">
+      <div>
+        <p>In einer Welt, die immer digitaler wird, verlieren wir oft den Zugang zu dem, was uns als Menschen
+           ausmacht: die direkte Interaktion, die gemeinsame Anstrengung und das unmittelbare Erleben von Erfolg.
+           Gerade im Schulalltag sind das entscheidende Faktoren für ein gesundes Klassenklima.</p>
+        <p>Wenn Schülerinnen und Schüler gemeinsam eine Herausforderung meistern, einen Parcours bezwingen oder
+           ein Rätsel lösen, lernen sie mehr als nur die Aufgabe selbst. Sie lernen, einander zu vertrauen, klar
+           zu kommunizieren, Stärken zu erkennen und Schwächen auszugleichen — und erleben, dass das Ganze mehr
+           ist als die Summe seiner Teile.</p>
+      </div>
+      <blockquote>
+        „Bewegung ist die Sprache, die jedes Kind versteht. In ihr liegt der Schlüssel zu echtem Teamgeist und
+        persönlichem Wachstum."
+        <footer>Mag. Wolfgang Göschl<br>Gründer von Primärsport</footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section id="projekte">
+  <div class="wrap">
+    <h2>Die vier Projekte</h2>
+    <p class="sub">Jedes Projekt läuft über drei Doppelstunden an drei Terminen — genug Zeit, damit aus
+       einzelnen Kindern eine eingespielte Mannschaft wird.</p>
+
+    <!-- 1 -->
+    <article class="projekt">
+      <img src="kurskatalog/bilder/piratenabenteuer.png" alt="Motopädagogisches Abenteuer – Piraten-Abenteuer" loading="lazy">
+      <div class="inhalt">
+        <h3>Motopädagogisches Abenteuer</h3>
+        <div class="mission">Mission: Das Piraten-Abenteuer</div>
+        <p>Hisst die Flagge und geht an Bord! Wir verwandeln den Turnsaal oder das Schulgelände in eine
+           geheimnisvolle Schatzinsel. Anhand einer alten Schatzkarte entschlüsselt die Klasse Hinweise, löst
+           Rätsel und meistert körperliche wie geistige Herausforderungen. Über drei Termine wird sie Schritt für
+           Schritt zur eingeschworenen Crew, die den Schatz nur gemeinsam bergen kann.</p>
+        <div class="foerdert">
+          <div><strong>Teamfähigkeit &amp; Kooperation</strong><span>Die Klasse erlebt, dass sie nur als geschlossene Crew erfolgreich ist.</span></div>
+          <div><strong>Kreative Problemlösung</strong><span>Beim Entschlüsseln von Hinweisen sind neue Ideen gefragt.</span></div>
+          <div><strong>Kommunikation &amp; Absprachen</strong><span>Klare Kommunikation ist der Schlüssel zum Erfolg der Mission.</span></div>
+          <div><strong>Rollenverständnis</strong><span>Kinder übernehmen spielerisch Verantwortung und wachsen daran.</span></div>
+        </div>
+        <div class="eckdaten">
+          <div><b>Schulstufe</b>1.–4. Volksschule, 1. &amp; 2. Unterstufe</div>
+          <div><b>Dauer</b>3 Doppelstunden an 3 Terminen</div>
+          <div><b>Preis</b>€ 15,– pro Kind und Einheit</div>
+          <div><b>Ort</b>Turnsaal, Freigelände</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="projekt">
+      <img src="kurskatalog/bilder/diamantenraub.png" alt="Teambuilding im Turnsaal – Diamantenraub" loading="lazy">
+      <div class="inhalt">
+        <h3>Teambuilding im Turnsaal</h3>
+        <div class="mission">Mission: Der Diamantenraub</div>
+        <p>Ein Abenteuer mit Wendung: Zuerst schleicht die Klasse als cleveres Diebes-Team durch den Turnsaal,
+           um wertvolle Juwelen zu ergattern. Doch plötzlich schnappt die Falle zu und das ganze Team landet im
+           „Gefängnis". Jetzt beginnt die eigentliche Mission — der gemeinsame Ausbruch. Ein echtes Abenteuer
+           in drei Akten.</p>
+        <div class="foerdert">
+          <div><strong>Teamfähigkeit &amp; Kooperation</strong><span>Nur als Team gelingen Ausbruch und Diamantensuche.</span></div>
+          <div><strong>Logische Problemlösung</strong><span>Codes knacken und eine Ausbruchsstrategie entwickeln.</span></div>
+          <div><strong>Kommunikation &amp; Absprachen</strong><span>Um unentdeckt zu bleiben, müssen sich alle abstimmen.</span></div>
+          <div><strong>Vertrauen &amp; Verlässlichkeit</strong><span>Jedes Kind verlässt sich auf die Hilfe der anderen.</span></div>
+        </div>
+        <div class="eckdaten">
+          <div><b>Schulstufe</b>1.–4. Volksschule, 1. &amp; 2. Unterstufe</div>
+          <div><b>Dauer</b>3 Doppelstunden an 3 Terminen</div>
+          <div><b>Preis</b>€ 15,– pro Kind und Einheit</div>
+          <div><b>Ort</b>Turnsaal, Wald</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="projekt">
+      <img src="kurskatalog/bilder/nachhaltigkeit.png" alt="Nachhaltigkeit und Sport – Klima-Detektive" loading="lazy">
+      <div class="inhalt">
+        <h3>Nachhaltigkeit &amp; Sport</h3>
+        <div class="mission">Mission: Die Klima-Detektive</div>
+        <p>Ein Fall für die Spezialabteilung! Die Klasse wird zum Team von Klima-Detektiven und Undercover-Agenten.
+           Ihre Mission: die Aufklärung mysteriöser Umwelt-Verbrechen. Sie sichern Spuren, knacken geheime Codes
+           zum Ressourcenverbrauch und erschaffen in einer Upcycling-Werkstatt aus „Beweismaterial" neue,
+           nützliche Dinge. Im Finale planen die Detektive gemeinsam eine grüne Aktion.</p>
+        <div class="foerdert">
+          <div><strong>Kritisches Denken</strong><span>Die Kinder hinterfragen Gewohnheiten und Umweltthemen.</span></div>
+          <div><strong>Lernen durch Bewegung</strong><span>Bewegungsrätsel machen Wissen über Nachhaltigkeit erlebbar.</span></div>
+          <div><strong>Teamarbeit &amp; Planung</strong><span>Die gemeinsame grüne Aktion schweißt die Gruppe zusammen.</span></div>
+          <div><strong>Verantwortungsbewusstsein</strong><span>Kinder erkennen, dass ihr Handeln einen Unterschied macht.</span></div>
+        </div>
+        <div class="eckdaten">
+          <div><b>Schulstufe</b>3.–4. Volksschule, 1.–4. Unterstufe</div>
+          <div><b>Dauer</b>3 Doppelstunden an 3 Terminen</div>
+          <div><b>Preis</b>€ 15,– pro Kind und Einheit</div>
+          <div><b>Ort</b>Turnsaal, Freigelände</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="projekt">
+      <img src="kurskatalog/bilder/ninja.png" alt="Ninja-Warrior Kids – Team-Parcours" loading="lazy">
+      <div class="inhalt">
+        <h3>Ninja-Warrior Kids</h3>
+        <div class="mission">Der ultimative Team-Parcours</div>
+        <p>Wir verwandeln den Turnsaal in eine epische Ninja-Warrior-Arena: schwingen, klettern, balancieren,
+           springen. Der Clou — viele Hindernisse sind so gebaut, dass sie nur im Team zu bezwingen sind. Eine
+           wackelige Brücke muss stabilisiert, eine hohe Wand gemeinsam erklommen, ein reißender Fluss überquert
+           werden. Es geht nicht um den schnellsten Einzelkämpfer, sondern darum, gemeinsam die Ziellinie zu
+           erreichen.</p>
+        <div class="foerdert">
+          <div><strong>Teamfähigkeit &amp; Kooperation</strong><span>Jedes Kind setzt seine Stärken für das Team ein.</span></div>
+          <div><strong>Vertrauen &amp; Verlässlichkeit</strong><span>Eine helfende Hand zu reichen baut Vertrauen auf.</span></div>
+          <div><strong>Stärken richtig einschätzen</strong><span>Die Kinder lernen, Fähigkeiten gezielt einzusetzen.</span></div>
+          <div><strong>Motorische Fähigkeiten</strong><span>Geschicklichkeit, Gleichgewicht und Körperbewusstsein.</span></div>
+        </div>
+        <div class="eckdaten">
+          <div><b>Schulstufe</b>1.–4. Volksschule, 1.–4. Unterstufe</div>
+          <div><b>Dauer</b>3 Doppelstunden an 3 Terminen</div>
+          <div><b>Preis</b>€ 15,– pro Kind und Einheit</div>
+          <div><b>Ort</b>Turnsaal</div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section style="background:var(--sand)">
+  <div class="wrap">
+    <h2>Ihr Projekt nach Maß</h2>
+    <p class="sub">Jede Schule ist einzigartig — Ihr Projekt auch. Sie haben einen besonderen Anlass, ein
+       spezifisches pädagogisches Ziel oder eine Idee, die in keinem Standardkurs abgebildet ist? Dann
+       entwickeln wir gemeinsam ein passgenaues Projekt.</p>
+    <div class="anlaesse">
+      <div class="anlass"><span class="icon">🤝</span><h3>Kennenlerntage</h3><p>Für einen starken Start ins neue Schuljahr.</p></div>
+      <div class="anlass"><span class="icon">🎉</span><h3>Bewegtes Schulfest</h3><p>Wir gestalten unvergessliche Stationen für Ihr Event.</p></div>
+      <div class="anlass"><span class="icon">🏆</span><h3>Abschluss-Events</h3><p>Ein besonderer Abschied für Ihre Abschlussklasse.</p></div>
+      <div class="anlass"><span class="icon">🧩</span><h3>Projekttage nach Thema</h3><p>Bewegung wird in spezifische Lehrinhalte integriert.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="malvorlagen">
+  <div class="wrap">
+    <h2>Malvorlagen zum Piraten-Abenteuer</h2>
+    <p class="sub">Zum Ausdrucken für zu Hause oder als Vor- und Nachbereitung in der Klasse — einfach
+       anklicken und speichern.</p>
+    <div class="bilderreihe">
+      <a href="downloads/malvorlagen-piraten/pirat.png" target="_blank" rel="noopener"><img src="downloads/malvorlagen-piraten/pirat.png" alt="Malvorlage Pirat" loading="lazy"></a>
+      <a href="downloads/malvorlagen-piraten/piratin.jpg" target="_blank" rel="noopener"><img src="downloads/malvorlagen-piraten/piratin.jpg" alt="Malvorlage Piratin" loading="lazy"></a>
+      <a href="downloads/malvorlagen-piraten/piratin2.png" target="_blank" rel="noopener"><img src="downloads/malvorlagen-piraten/piratin2.png" alt="Malvorlage Piratin" loading="lazy"></a>
+      <a href="downloads/malvorlagen-piraten/schiff.png" target="_blank" rel="noopener"><img src="downloads/malvorlagen-piraten/schiff.png" alt="Malvorlage Schiff" loading="lazy"></a>
+      <a href="downloads/malvorlagen-piraten/schatz.jpg" target="_blank" rel="noopener"><img src="downloads/malvorlagen-piraten/schatz.jpg" alt="Malvorlage Schatz" loading="lazy"></a>
+      <a href="downloads/malvorlagen-piraten/papagei.png" target="_blank" rel="noopener"><img src="downloads/malvorlagen-piraten/papagei.png" alt="Malvorlage Papagei" loading="lazy"></a>
+      <a href="downloads/malvorlagen-piraten/oktopus.jpg" target="_blank" rel="noopener"><img src="downloads/malvorlagen-piraten/oktopus.jpg" alt="Malvorlage Oktopus" loading="lazy"></a>
+      <a href="downloads/malvorlagen-piraten/hut.png" target="_blank" rel="noopener"><img src="downloads/malvorlagen-piraten/hut.png" alt="Malvorlage Hut" loading="lazy"></a>
+      <a href="downloads/malvorlagen-piraten/schwert.png" target="_blank" rel="noopener"><img src="downloads/malvorlagen-piraten/schwert.png" alt="Malvorlage Schwert" loading="lazy"></a>
+      <a href="downloads/malvorlagen-piraten/totenkopf.jpg" target="_blank" rel="noopener"><img src="downloads/malvorlagen-piraten/totenkopf.jpg" alt="Malvorlage Totenkopf" loading="lazy"></a>
+      <a href="downloads/malvorlagen-piraten/totenkopf-und-schwerter.png" target="_blank" rel="noopener"><img src="downloads/malvorlagen-piraten/totenkopf-und-schwerter.png" alt="Malvorlage Totenkopf mit Schwertern" loading="lazy"></a>
+      <a href="downloads/malvorlagen-piraten/flasche-vogel-hut.jpg" target="_blank" rel="noopener"><img src="downloads/malvorlagen-piraten/flasche-vogel-hut.jpg" alt="Malvorlage Flasche, Vogel und Hut" loading="lazy"></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="download">
+      <div>
+        <h2>Den ganzen Katalog mitnehmen</h2>
+        <p>Alle vier Projekte mit Beschreibungen, Förderzielen und Eckdaten — als PDF zum Weiterleiten
+           an Kolleginnen, Direktion oder Elternverein.</p>
+      </div>
+      <a class="btn sand" href="kurskatalog/Primaersport-Projekte-Kurskatalog.pdf" target="_blank" rel="noopener">⬇ Kurskatalog als PDF</a>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap" style="text-align:center">
+    <h2>Bereit für eine starke Klasse?</h2>
+    <p class="sub" style="margin:8px auto 26px">Ich berate Sie gerne unverbindlich, welches Projekt zu Ihrer
+       Klasse passt — und stimme Ablauf, Termine und Räumlichkeiten mit Ihnen ab.</p>
+    <a class="btn" href="index.html#kontakt">Beratungsgespräch anfragen</a>
+    <p style="margin-top:22px;color:var(--grey);font-size:.93rem">
+      Daniel Robnik, BSc. MSc. · Projektkoordination<br>
+      <a data-user="office" data-host="primaersport-projekte.at" style="color:var(--green-dark);font-weight:600">office [at] primaersport-projekte.at</a>
+      · <a href="tel:+436645203520" style="color:var(--green-dark);font-weight:600">0664 / 520 35 20</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Primär Sportprojekte · Daniel Robnik</div>
+    <div>
+      <a href="index.html">Startseite</a>
+      <a href="wissensdatenbank.html">Wissensdatenbank</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* E-Mail-Adresse erst hier zusammensetzen, damit Spam-Harvester sie nicht
+   fertig im Quelltext finden — gleiche Logik wie auf der Startseite. */
+document.querySelectorAll("a[data-user][data-host]").forEach(function (a) {
+  const adr = a.getAttribute("data-user") + "@" + a.getAttribute("data-host");
+  a.setAttribute("href", "mailto:" + adr);
+  a.textContent = adr;
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Dokumente – Intern | Primär Sportprojekte</title>
+<link rel="stylesheet" href="gemeinsam.css">
+<style>
+  /* Leseansicht für Markdown-Dokumente */
+  .dok-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+  .dok{background:#fff;border-radius:12px;padding:16px 18px;border-left:4px solid var(--green);
+       display:flex;flex-direction:column;gap:6px;cursor:pointer}
+  .dok:hover{box-shadow:0 6px 18px rgba(31,74,53,.10)}
+  .dok.datei{border-left-color:var(--accent);cursor:default}
+  .dok h3{color:var(--green-dark);font-size:1rem;line-height:1.35}
+  .dok p{font-size:.87rem;color:var(--grey)}
+  .dok .fuss{display:flex;gap:8px;align-items:center;margin-top:auto;padding-top:8px;font-size:.78rem;color:var(--grey)}
+  .kategorie-titel{color:var(--green-dark);font-size:1.15rem;margin:30px 0 12px;padding-bottom:6px;
+                   border-bottom:2px solid var(--green-light)}
+  .lese{background:#fff;border-radius:14px;padding:28px 30px;line-height:1.7}
+  .lese h1{color:var(--green-dark);font-size:1.5rem;margin:0 0 14px}
+  .lese h2{color:var(--green-dark);font-size:1.2rem;margin:26px 0 10px;padding-bottom:5px;border-bottom:1px solid var(--linie)}
+  .lese h3{color:var(--green);font-size:1.03rem;margin:20px 0 6px}
+  .lese p{margin:0 0 12px}
+  .lese ul,.lese ol{margin:0 0 14px 22px}
+  .lese li{margin-bottom:5px}
+  .lese code{background:var(--green-light);padding:2px 6px;border-radius:5px;font-size:.9em}
+  .lese blockquote{border-left:4px solid var(--accent);background:var(--sand);padding:10px 16px;
+                   margin:0 0 14px;border-radius:0 8px 8px 0}
+  .lese table{border-collapse:collapse;width:100%;margin:0 0 16px;font-size:.92rem;display:block;overflow-x:auto}
+  .lese th,.lese td{border:1px solid var(--linie);padding:8px 11px;text-align:left;vertical-align:top}
+  .lese th{background:var(--green-light);color:var(--green-dark)}
+  .lese hr{border:none;border-top:1px solid var(--linie);margin:22px 0}
+  .lese a{color:var(--green)}
+  .zurueck{margin-bottom:16px}
+  @media print{
+    header,nav,footer,.toolbar,.zurueck,.anzahl{display:none !important}
+    .lese{padding:0;border-radius:0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kopfzeile">
+      <a class="logo" href="index.html">Primär<span>Sport</span>projekte<em>intern</em></a>
+      <div id="status" class="status">Dokumente</div>
+    </div>
+    <nav class="bereiche">
+      <a href="index.html">Übersicht</a>
+      <a href="zielplan.html">Zielplan</a>
+      <a href="stundenbilder.html">Notizen &amp; Stundenbilder</a>
+      <a href="spiele.html">Spieledatenbank</a>
+      <a href="dokumente.html">Dokumente</a>
+      <a href="/">↗ Öffentliche Website</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div id="uebersicht">
+    <div class="seitenkopf">
+      <h1>Dokumente</h1>
+      <p>Konzepte, Vorlagen und Unterlagen aus dem Projekt Brennpunktschule sowie zum Unternehmen.
+         Textdokumente lassen sich direkt hier lesen und ausdrucken, Word- und PDF-Dateien herunterladen.</p>
+    </div>
+
+    <div class="toolbar">
+      <input type="search" id="suche" placeholder="Suchen: Titel, Inhalt, Kategorie …" aria-label="Suchen">
+      <select id="filter-kategorie" aria-label="Nach Kategorie filtern"></select>
+    </div>
+
+    <div class="anzahl" id="anzahl"></div>
+    <div id="liste"></div>
+  </div>
+
+  <div id="ansicht" style="display:none">
+    <div class="zurueck">
+      <button class="btn ghost klein" onclick="zurueck()">← Zurück zur Übersicht</button>
+      <button class="btn ghost klein" onclick="window.print()">🖨 Drucken</button>
+      <a class="btn ghost klein" id="rohdatei" href="#" download>⬇ Originaldatei</a>
+    </div>
+    <article class="lese" id="lese"></article>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Interner Bereich · Primär Sportprojekte</div>
+    <div>Angemeldet als <span id="angemeldet">—</span></div>
+  </div>
+</footer>
+
+<script src="gemeinsam.js"></script>
+<script src="dokumente.js"></script>
+<script>
+const liste  = document.getElementById('liste');
+const anzahl = document.getElementById('anzahl');
+const suche  = document.getElementById('suche');
+const fKat   = document.getElementById('filter-kategorie');
+
+const KATEGORIEN = [...new Set(dokumente.map(d => d.kategorie))];
+fKat.innerHTML = optionen(KATEGORIEN, '', 'Alle Kategorien');
+
+/* Dateitypen, die sich direkt lesen lassen */
+const LESBAR = ['md', 'txt', 'csv'];
+
+const ICON = { md:'📄', txt:'📄', csv:'📊', docx:'📝', doc:'📝', pdf:'📕', png:'🖼', jpg:'🖼', xlsx:'📊' };
+
+/* ── Übersicht ──────────────────────────────────────────────────── */
+
+function gefiltert() {
+  const q = suche.value.trim().toLowerCase();
+  const k = fKat.value;
+  return dokumente
+    .filter(d => !k || d.kategorie === k)
+    .filter(d => !q || (d.titel + ' ' + d.beschreibung + ' ' + d.kategorie + ' ' + d.datei).toLowerCase().includes(q));
+}
+
+function zeichnen() {
+  const treffer = gefiltert();
+  anzahl.textContent = treffer.length === dokumente.length
+    ? dokumente.length + ' Dokumente'
+    : treffer.length + ' von ' + dokumente.length + ' Dokumenten';
+
+  if (!treffer.length) {
+    liste.innerHTML = '<div class="leer"><strong>Nichts gefunden</strong>Für diese Suche gibt es kein Dokument.</div>';
+    return;
+  }
+
+  let html = '';
+  for (const kat of KATEGORIEN) {
+    const drin = treffer.filter(d => d.kategorie === kat);
+    if (!drin.length) continue;
+    html += '<h2 class="kategorie-titel">' + esc(kat) + ' <span style="font-weight:400;font-size:.85rem;color:var(--grey)">(' + drin.length + ')</span></h2>';
+    html += '<div class="dok-liste">' + drin.map(d => {
+      const lesbar = LESBAR.includes(d.typ);
+      return `<article class="dok${lesbar ? '' : ' datei'}" data-datei="${esc(d.datei)}">
+        <h3>${ICON[d.typ] || '📎'} ${esc(d.titel)}</h3>
+        ${d.beschreibung ? `<p>${esc(kurz(d.beschreibung, 120))}</p>` : ''}
+        <div class="fuss">
+          <span class="chip${lesbar ? '' : ' sand'}">${esc(d.typ.toUpperCase())}</span>
+          <span>${d.kb} KB</span>
+          <span style="margin-left:auto">${lesbar ? 'Lesen →' : 'Herunterladen ↓'}</span>
+        </div>
+      </article>`;
+    }).join('') + '</div>';
+  }
+  liste.innerHTML = html;
+}
+
+function kurz(t, max) {
+  const s = String(t || '').replace(/\s+/g, ' ').trim();
+  return s.length > max ? s.slice(0, max) + ' …' : s;
+}
+
+liste.addEventListener('click', (e) => {
+  const el = e.target.closest('.dok');
+  if (!el) return;
+  const d = dokumente.find(x => x.datei === el.dataset.datei);
+  if (!d) return;
+  if (LESBAR.includes(d.typ)) oeffnen(d);
+  else window.open(d.datei, '_blank');
+});
+
+suche.addEventListener('input', zeichnen);
+fKat.addEventListener('change', zeichnen);
+
+/* ── Leseansicht ────────────────────────────────────────────────── */
+
+async function oeffnen(d) {
+  const lese = document.getElementById('lese');
+  lese.innerHTML = '<p style="color:var(--grey)">Wird geladen …</p>';
+  document.getElementById('uebersicht').style.display = 'none';
+  document.getElementById('ansicht').style.display = '';
+  document.getElementById('rohdatei').href = d.datei;
+  window.scrollTo(0, 0);
+  history.replaceState(null, '', '#' + encodeURIComponent(d.datei));
+
+  try {
+    const r = await fetch(d.datei, { credentials: 'same-origin' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const text = await r.text();
+    lese.innerHTML = d.typ === 'csv' ? csvZuTabelle(text) : markdown(text);
+  } catch (e) {
+    lese.innerHTML = '<p class="warnung schlimm">Das Dokument konnte nicht geladen werden. ' +
+      'Möglicherweise ist die Anmeldung abgelaufen — bitte die Seite neu laden.</p>';
+  }
+}
+
+function zurueck() {
+  document.getElementById('ansicht').style.display = 'none';
+  document.getElementById('uebersicht').style.display = '';
+  history.replaceState(null, '', location.pathname);
+}
+
+/* ── Markdown → HTML ────────────────────────────────────────────────
+   Bewusst ohne fremde Bibliothek: keine CDN-Abhängigkeit, die eines
+   Tages verschwindet. Deckt ab, was in den Dokumenten vorkommt.
+   Wichtig: Erst alles absichern, dann Formatierung anwenden. */
+
+function markdown(roh) {
+  const zeilen = esc(roh).replace(/\r\n/g, '\n').split('\n');
+  let html = '', inListe = null, inTabelle = false, inCode = false;
+
+  const zuEnde = () => {
+    if (inListe) { html += `</${inListe}>`; inListe = null; }
+    if (inTabelle) { html += '</tbody></table>'; inTabelle = false; }
+  };
+
+  for (let i = 0; i < zeilen.length; i++) {
+    let z = zeilen[i];
+
+    // Codeblöcke unverändert lassen
+    if (/^\s*```/.test(z)) {
+      zuEnde();
+      html += inCode ? '</pre>' : '<pre style="background:var(--sand);padding:12px;border-radius:8px;overflow-x:auto">';
+      inCode = !inCode;
+      continue;
+    }
+    if (inCode) { html += z + '\n'; continue; }
+
+    const t = z.trim();
+
+    if (!t) { zuEnde(); continue; }
+
+    // Tabelle
+    if (/^\|.*\|$/.test(t)) {
+      const zellen = t.slice(1, -1).split('|').map(c => c.trim());
+      if (/^[\s|:-]+$/.test(t)) continue;                   // Trennzeile überspringen
+      if (!inTabelle) {
+        zuEnde();
+        html += '<table><thead><tr>' + zellen.map(c => '<th>' + inline(c) + '</th>').join('') + '</tr></thead><tbody>';
+        inTabelle = true;
+      } else {
+        html += '<tr>' + zellen.map(c => '<td>' + inline(c) + '</td>').join('') + '</tr>';
+      }
+      continue;
+    }
+    if (inTabelle) { html += '</tbody></table>'; inTabelle = false; }
+
+    // Überschriften
+    const h = t.match(/^(#{1,6})\s+(.*)$/);
+    if (h) { zuEnde(); const n = Math.min(h[1].length, 4); html += `<h${n}>${inline(h[2])}</h${n}>`; continue; }
+
+    // Trennlinie
+    if (/^(\*\s*){3,}$|^(-\s*){3,}$|^(_\s*){3,}$/.test(t)) { zuEnde(); html += '<hr>'; continue; }
+
+    // Zitat
+    if (/^&gt;\s?/.test(t)) { zuEnde(); html += '<blockquote>' + inline(t.replace(/^&gt;\s?/, '')) + '</blockquote>'; continue; }
+
+    // Listen
+    const ul = t.match(/^[-*+]\s+(.*)$/);
+    const ol = t.match(/^\d+[.)]\s+(.*)$/);
+    if (ul || ol) {
+      const art = ul ? 'ul' : 'ol';
+      if (inListe && inListe !== art) { html += `</${inListe}>`; inListe = null; }
+      if (!inListe) { html += `<${art}>`; inListe = art; }
+      html += '<li>' + inline((ul || ol)[1]) + '</li>';
+      continue;
+    }
+    if (inListe) { html += `</${inListe}>`; inListe = null; }
+
+    html += '<p>' + inline(t) + '</p>';
+  }
+  zuEnde();
+  if (inCode) html += '</pre>';
+  return html;
+}
+
+/** Formatierung innerhalb einer Zeile. Eingabe ist bereits abgesichert. */
+function inline(s) {
+  return s
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>')
+    .replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+}
+
+/** CSV als Tabelle darstellen. */
+function csvZuTabelle(text) {
+  const zeilen = text.replace(/\r\n/g, '\n').split('\n').filter(z => z.trim());
+  if (!zeilen.length) return '<p>Diese Datei ist leer.</p>';
+  const trenner = (zeilen[0].match(/;/g) || []).length > (zeilen[0].match(/,/g) || []).length ? ';' : ',';
+  const kopf = zeilen[0].split(trenner);
+  return '<table><thead><tr>' + kopf.map(c => '<th>' + esc(c.trim()) + '</th>').join('') + '</tr></thead><tbody>' +
+    zeilen.slice(1).map(z => '<tr>' + z.split(trenner).map(c => '<td>' + esc(c.trim()) + '</td>').join('') + '</tr>').join('') +
+    '</tbody></table>';
+}
+
+/* ── Start ──────────────────────────────────────────────────────── */
+
+zeichnen();
+Status.setze(dokumente.length + ' Dokumente', 'ok');
+
+// Direktlink auf ein Dokument (z. B. aus einem Lesezeichen)
+if (location.hash.length > 1) {
+  const gesucht = decodeURIComponent(location.hash.slice(1));
+  const d = dokumente.find(x => x.datei === gesucht);
+  if (d && LESBAR.includes(d.typ)) oeffnen(d);
+}
+</script>
+
+</body>
+</html>
