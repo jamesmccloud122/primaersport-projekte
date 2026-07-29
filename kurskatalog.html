@@ -45,7 +45,10 @@
   .vorwort p{margin-bottom:14px}
   blockquote{border-left:4px solid var(--accent);padding:14px 20px;background:#fff;border-radius:0 12px 12px 0;
              font-size:1.05rem;color:var(--green-dark);font-style:italic}
-  blockquote footer{margin-top:10px;font-style:normal;font-size:.88rem;color:var(--grey)}
+  /* Hintergrund und Abstand bewusst zuruecksetzen: sonst erbt die Zeile
+     unter dem Zitat das dunkle Styling der Seiten-Fusszeile weiter unten. */
+  blockquote footer{margin-top:10px;font-style:normal;font-size:.88rem;color:var(--grey);
+                    background:none;padding:0;display:block}
 
   .projekt{border:1px solid #E1E5E2;border-radius:16px;overflow:hidden;margin-bottom:28px;background:#fff}
   .projekt > img{width:100%;max-height:280px;object-fit:cover;display:block;background:var(--green-light)}
