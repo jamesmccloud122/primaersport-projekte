@@ -4,6 +4,26 @@
    findings, relevance, link, date. */
 const studies = [
   {
+    title: "Effects of different physical activity modalities on executive function in children with attention deficit hyperactivity disorder: a systematic review and meta-analysis",
+    authors: "Chen et al., 2026 · Frontiers in Psychiatry",
+    topic: "Motorik & exekutive Funktionen",
+    method: "Systematisches Review und Meta-Analyse von 21 RCTs mit insgesamt 915 Kindern (6–18 J.); Bewegungsmodalitäten: Ausdauertraining, Krafttraining, kognitiv angereicherte Aktivitäten, Kampfsport, Schwimmen; Interventionsdauer 3–72 Wochen; Länder: China, USA, Tunesien, Iran, Schweiz.",
+    findings: "Alle drei exekutiven Funktionen signifikant verbessert: Inhibitionskontrolle (SMD = −0,69, 95 % KI: −0,84 bis −0,54, p < 0,00001), kognitive Flexibilität (SMD = −0,53, 95 % KI: −0,71 bis −0,35, p < 0,00001), Arbeitsgedächtnis (SMD = −0,43, 95 % KI: −0,59 bis −0,26, p < 0,00001); optimale Wirkung bei ≥ 6 Wochen Dauer und moderat-hoher Intensität.",
+    relevance: "Regelmäßige Bewegung verbessert nachweislich alle drei zentralen exekutiven Funktionen bei Kindern mit ADHS — ein starkes Argument für Bewegungsangebote als fester Bestandteil multimodaler ADHS-Förderung.",
+    link: "https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2026.1824121/full",
+    date: "2026-07-30"
+  },
+  {
+    title: "Time-course effects of cognitively engaging physical activity on executive function and self-control in younger school-aged children: a randomized controlled trial",
+    authors: "Xu et al., 2025 · Frontiers in Psychology",
+    topic: "Motorik & exekutive Funktionen",
+    method: "203 Schulkinder (8–10 J., Polen/China); Cluster-RCT mit 3 Messzeitpunkten: 10 Wochen, 3×/Woche 45 Min kognitiv angereicherte Bewegungseinheiten (Teamspiele, Gedächtnisübungen, schnelle Entscheidungsaufgaben) vs. regulärer Sportunterricht.",
+    findings: "Signifikante Verbesserungen in Inhibitionskontrolle (p = 0,020, d = 0,66) und Arbeitsgedächtnis (p = 0,002, d = 0,80); kognitive Flexibilität nicht signifikant (p = 0,077); besonders ausgeprägte Effekte auf Selbstkontrolle gesamt (+26,38 %, d = 1,98) und soziale Interaktion (+48,31 %, d = 2,06).",
+    relevance: "Kognitiv angereicherte Bewegungseinheiten stärken nach 10 Wochen gezielt Arbeitsgedächtnis und Selbstkontrolle bei Schulkindern — ein praxisnahes Format, das sich direkt in psychomotorische Gruppenangebote übertragen lässt.",
+    link: "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1628814/full",
+    date: "2026-07-30"
+  },
+  {
     title: "Optimal exercise interventions for enhancing cognitive function in older adults: a network meta-analysis",
     authors: "Han et al., 2025 · Frontiers in Aging Neuroscience",
     topic: "Motogeragogik",
