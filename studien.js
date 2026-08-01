@@ -4,6 +4,46 @@
    findings, relevance, link, date. */
 const studies = [
   {
+    title: "The association between motor coordination, physical fitness, and cognitive function in preschool children: physical fitness as a key bridge between motor coordination and executive function",
+    authors: "Zhang et al., 2026 · Frontiers in Public Health",
+    topic: "Motorik & exekutive Funktionen",
+    method: "Querschnittstudie mit 713 Vorschulkindern (386 Jungen, 327 Mädchen; 3–6 Jahre, China); Erhebung von Motorkoordination, körperlicher Fitness (PFI) und drei Bereichen exekutiver Funktionen (kognitive Flexibilität, Inhibitionskontrolle, Arbeitsgedächtnis) mit anschließender Mediationsanalyse.",
+    findings: "Motorkoordination und körperliche Fitness korrelierten moderat (r = 0,443, p < 0,01). Körperliche Fitness mediierte den Zusammenhang zwischen Motorkoordination und exekutiver Funktion: vollständige Mediation beim Arbeitsgedächtnis (indirekter Effektanteil 46,9 %), partielle Mediation bei kognitiver Flexibilität (28,7 %) und Inhibitionskontrolle (31,5 %). MC und PFI sagten kognitive Flexibilität (β = 0,141 bzw. 0,106, p < 0,05) und Inhibitionskontrolle (β = 0,120 bzw. 0,098, p < 0,05) unabhängig voraus.",
+    relevance: "Körperliche Fitness vermittelt den Zusammenhang zwischen Motorik und Denkvermögen im Vorschulalter – ein starkes Argument für integrierte Bewegungsangebote, die Koordination und Ausdauer/Kraft gleichermaßen fördern.",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC13099747/",
+    date: "2026-08-01"
+  },
+  {
+    title: "Effects of video game-based interventions on executive functions and motor skills in children and adolescents with neurodevelopmental disorders: a systematic review and meta-analysis",
+    authors: "Gao et al., 2026 · Frontiers in Rehabilitation Sciences",
+    topic: "Motorik & exekutive Funktionen",
+    method: "Systematisches Review und Meta-Analyse von 20 RCTs; 878 Kinder und Jugendliche (3–18 Jahre; 591 ADHS, 216 DCD, 71 Autismus-Spektrum-Störung); Interventionstypen: aktive Videospiele (Nintendo Wii, Microsoft Kinect) und sedentäre kognitiv-motorische Computerprogramme; Dauer 3–14 Wochen, 1–10 Einheiten/Woche à 10–65 Minuten.",
+    findings: "Signifikante Verbesserungen der Inhibitionskontrolle (SMD = −0,41, 95 % KI: −0,58 bis −0,25, p < 0,001), kognitiven Flexibilität (SMD = −0,33, 95 % KI: −0,50 bis −0,15, p < 0,001) und des Arbeitsgedächtnisses (SMD = 0,42, 95 % KI: 0,27–0,58, p < 0,001). Grobmotorik verbessert (SMD = 0,45, 95 % KI: 0,07–0,82, p < 0,05); Feinmotorik nicht signifikant. Aktive Spiele wirkten stärker auf kognitive Flexibilität, sedentäre Programme stärker auf das Arbeitsgedächtnis.",
+    relevance: "Aktive Videospiele können als ergänzendes Fördermedium bei Kindern mit ADHS, DCD oder Autismus eingesetzt werden und verbessern sowohl exekutive Funktionen als auch die Grobmotorik.",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12982429/",
+    date: "2026-08-01"
+  },
+  {
+    title: "Physical activity intervention improves executive function in children with autism spectrum disorder: a meta-analysis",
+    authors: "Li et al., 2026 · Frontiers in Pediatrics",
+    topic: "Motorik & exekutive Funktionen",
+    method: "Meta-Analyse von 14 randomisierten kontrollierten Studien; Kinder mit Autismus-Spektrum-Störung (DSM-5), Altersbereich 5,11–14,42 Jahre; Interventionstypen: Fundamentales Bewegungstraining, digitale Bewegungsspiele, Basketball/Tischtennis, Kampfsport, Wassergymnastik und Mind-Body-Übungen.",
+    findings: "Signifikante Verbesserung aller exekutiven Funktionen: Gesamteffekt SMD = 0,76 (95 % KI: 0,36–1,17); Inhibitionskontrolle SMD = 0,66 (95 % KI: 0,44–0,89); Arbeitsgedächtnis SMD = 0,61 (95 % KI: 0,34–0,88); kognitive Flexibilität SMD = 0,41 (95 % KI: 0,09–0,72). Größter Effekt bei fundamentalem Bewegungstraining 4×/Woche über 18 Wochen (SMD = 2,62, 95 % KI: 1,50–3,74).",
+    relevance: "Für die Arbeit mit Kindern im Autismus-Spektrum gilt: Strukturiertes Bewegungstraining, besonders fundamentale Bewegungsmuster, verbessert alle drei exekutiven Funktionsbereiche messbar — ein starkes Argument für inklusive Bewegungsangebote.",
+    link: "https://www.frontiersin.org/journals/pediatrics/articles/10.3389/fped.2026.1693801/full",
+    date: "2026-07-31"
+  },
+  {
+    title: "Enhancing interoceptive awareness in community-dwelling older adults: effects of a psychomotor intervention mediated by creative dance",
+    authors: "Rosado et al., 2025 · Frontiers in Psychology",
+    topic: "Motogeragogik",
+    method: "34 ältere Erwachsene (17 Interventionsgruppe, 17 Kontrollgruppe), Ø 74,6 ± 6,6 Jahre, Portugal; quasi-experimentelle Studie, 12 Wochen, 3×/Woche 60-minütige psychomotorische Einheiten mit kreativem Tanz (Körperwahrnehmung, Atemübungen, Muskelspannung, choreografische Phasen) vs. gewöhnliche Aktivitäten.",
+    findings: "Signifikante Verbesserungen in der Interventionsgruppe: Aufmerksamkeitsregulation +57,4 % (p < 0,001, r = 0,62), emotionales Gewahrsein +38,8 % (p < 0,001, r = 0,60), Selbstregulation +39,3 % (p < 0,001, r = 0,59), Wahrnehmen +39,4 % (p = 0,002, r = 0,53), Nicht-Sorgen +19,9 % (p = 0,024, r = 0,39). Signifikante Gruppenunterschiede nach Intervention (p < 0,001, r = 0,57–0,72).",
+    relevance: "Kreative Tanzelemente in psychomotorischen Einheiten stärken bei älteren Menschen nachweislich die Körperwahrnehmung und emotionale Selbstregulation — ein praxisnahes Argument für ressourcenorientierte Motogeragogik.",
+    link: "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1515393/full",
+    date: "2026-07-31"
+  },
+  {
     title: "Effects of different physical activity modalities on executive function in children with attention deficit hyperactivity disorder: a systematic review and meta-analysis",
     authors: "Chen et al., 2026 · Frontiers in Psychiatry",
     topic: "Motorik & exekutive Funktionen",
