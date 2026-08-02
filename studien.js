@@ -4,6 +4,26 @@
    findings, relevance, link, date. */
 const studies = [
   {
+    title: "Optimizing Cognitive and Physical Gains in Older Adults: Benefits of a Psychomotor Intervention Program Based on Functional Level",
+    authors: "Rosado et al., 2025 · Medicina (MDPI)",
+    topic: "Motogeragogik",
+    method: "51 ältere Erwachsene (75,4 ± 5,6 Jahre, 42 Frauen, 9 Männer, Portugal); einfach-blinde RCT mit 24-wöchiger Intervention und 12-wöchiger Follow-up-Phase; drei Gruppen: funktionell niedrige Experimentalgruppe (LFG, n=16), funktionell höhere Experimentalgruppe (HFG, n=16) und Kontrollgruppe (n=19); 3×/Woche 75 Min kognitive-motorische Doppelaufgaben mit progressiver Komplexität.",
+    findings: "LFG verbesserte Verarbeitungsgeschwindigkeit um −29,3 s (TMT-A, p<0,05, ES=0,40–0,62) und exekutive Funktionen um −66,6 s (TMT-B, p<0,05, großer Effekt); Körperkraft +6,9 Wdh. (p<0,05, ES=0,57–0,62); Gleichgewicht +5,9 Punkte (FAB, p<0,05). HFG zeigte kleinere, aber signifikante Verbesserungen. Kognitive Gewinne blieben beim Follow-up erhalten, körperliche Verbesserungen bildeten sich zurück.",
+    relevance: "Für die motogeragogische Praxis: Kognitive Gewinne durch psychomotorisches Training bleiben auch nach Trainingsende erhalten – ein starkes Argument für regelmäßige, niederschwellige psychomotorische Programme in der Seniorenarbeit.",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12471732/",
+    date: "2026-08-02"
+  },
+  {
+    title: "The effects of aquatic and land-based interventions on children with developmental coordination disorder",
+    authors: "Ferreira et al., 2025 · Frontiers in Human Neuroscience",
+    topic: "Motorische Förderung bei DCD",
+    method: "66 Kinder mit DCD (39 Jungen, 27 Mädchen, Ø 7,6 ± 1,0 Jahre, Brasilien); RCT mit vier Gruppen: Aquatik-DCD, Terrestrisch-DCD, Kontroll-DCD und typische Entwicklung; 18 Wochen, 3×/Woche 60 Min aufgabenorientiertes Training (Stabilisierung, Lokomotion, Manipulation) im Wasser bzw. an Land; 6-Monats-Follow-up.",
+    findings: "Beide Interventionsgruppen verbesserten den MABC-2-Gesamtwert signifikant gegenüber der Kontroll-DCD-Gruppe (p<0,05; d=0,85–0,92); Zeiteffekte von prä zu Follow-up groß (d=1,14–2,2). Beim 6-Monats-Follow-up näherten sich beide Gruppen dem Niveau typisch entwickelter Kinder an (d=1,65–1,72). Aquatik- und Landtraining zeigten vergleichbare Effekte.",
+    relevance: "Für die DCD-Förderung gilt: Sowohl Aquatik- als auch Landprogramme mit aufgabenorientiertem Ansatz sind gleich wirksam – eine wichtige Planungshilfe für Einrichtungen ohne Schwimmbadzugang.",
+    link: "https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2025.1638987/full",
+    date: "2026-08-02"
+  },
+  {
     title: "The association between motor coordination, physical fitness, and cognitive function in preschool children: physical fitness as a key bridge between motor coordination and executive function",
     authors: "Zhang et al., 2026 · Frontiers in Public Health",
     topic: "Motorik & exekutive Funktionen",
