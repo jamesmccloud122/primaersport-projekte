@@ -4,6 +4,26 @@
    findings, relevance, link, date. */
 const studies = [
   {
+    title: "Effects of Developmental Gymnastics Exercise Program on Preschoolers' Motor Skills: A Randomised Controlled Trial",
+    authors: "Radanović et al., 2025 · Children (MDPI)",
+    topic: "Bewegungsförderung Vorschule",
+    method: "220 Vorschulkinder (99 Experimentalgruppe, 121 Kontrollgruppe; 5,2 ± 0,86 Jahre, Serbien); RCT, 36 Wochen; Experimentalgruppe 2×60 Min/Woche strukturiertes Entwicklungsturnen, Kontrollgruppe 3×45 Min/Woche regulärer Sportunterricht; Erhebung mit TGMD-2 (Lokomotion und Objektkontrolle).",
+    findings: "Signifikante Verbesserung des TGMD-2-Gesamtwertes in der Experimentalgruppe (+3,28 Punkte, p = 0,0002, partielles η² = 0,24); Effektgrößen für Einzelaufgaben: partielles η² = 0,05–0,19, Cohens d = 0,6–1,4 (mittel bis groß); Lokomotionsfertigkeiten profitierten stärker als Objektkontrollfertigkeiten; Mädchen erzielten größere Fortschritte in Lokomotionsaufgaben, Jungen in Objektkontrollaufgaben.",
+    relevance: "Bereits zwei strukturierte Turnstunden pro Woche über ein Schuljahr verbessern die Grundmotorik von Vorschulkindern messbar – ein starkes Argument für regelmäßige, pädagogisch begleitete Turneinheiten ab dem Kindergartenalter.",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12731613/",
+    date: "2026-08-03"
+  },
+  {
+    title: "Exploring the benefits of a psychomotor intervention mediated by creative dance in community-dwelling older adults: development of new coordination and rhythm tests",
+    authors: "Rosado et al., 2025 · BMC Public Health",
+    topic: "Motogeragogik",
+    method: "38 ältere Erwachsene (19 Experimentalgruppe, 19 Kontrollgruppe; 73,4 ± 5,7 Jahre, Portugal); quasi-experimentelles Design, 12 Wochen, 3×/Woche 50–60 Min kreativtanzbasierte psychomotorische Einheiten (Körperwahrnehmung, Rhythmus, Improvisation, progressive Schwierigkeit) vs. Routineaktivitäten; Entwicklung und Validierung neuer Koordinations- und Rhythmustests (ICC 0,962–1,00).",
+    findings: "Signifikante Verbesserungen in der Experimentalgruppe: globale Motorkoordination (p < 0,001, Effektgröße 0,73), Gleichgewicht (p < 0,001, Effektgröße 0,61), alle Rhythmus-Subskalen – Tapping, Klatschen, Gehen (je p < 0,001, Effektgröße 0,40–0,74); Kontrollgruppe blieb stabil; Anwesenheitsrate 91,4 %.",
+    relevance: "Kreative Tanzelemente in psychomotorischen Einheiten verbessern Gleichgewicht, Motorkoordination und Rhythmusgefühl bei Älteren messbar – zentrale Ressourcen für sicheres und selbstständiges Bewegen im Alltag.",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12080021/",
+    date: "2026-08-03"
+  },
+  {
     title: "Optimizing Cognitive and Physical Gains in Older Adults: Benefits of a Psychomotor Intervention Program Based on Functional Level",
     authors: "Rosado et al., 2025 · Medicina (MDPI)",
     topic: "Motogeragogik",
