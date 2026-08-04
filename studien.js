@@ -4,6 +4,26 @@
    findings, relevance, link, date. */
 const studies = [
   {
+    title: "The impact of physical exercise interventions on social, behavioral, and motor skills in children with autism: a systematic review and meta-analysis of randomized controlled trials",
+    authors: "Wang et al., 2025 · Frontiers in Pediatrics",
+    topic: "Motorik & exekutive Funktionen",
+    method: "Systematisches Review und Meta-Analyse von 23 RCTs; Kinder und Jugendliche mit Autismus-Spektrum-Störung (ca. 3–15 Jahre); Interventionstypen: Radsport, Ballsport (Basketball, Fußball), Kampfsport, Trampolintraining, Schwimmen, Reiten sowie kombiniertes körperliches Training; Interventionsdauer 2 Wochen bis 6 Monate, mehrheitlich 8–12 Wochen.",
+    findings: "Signifikante Verbesserungen in: Motorik und Koordination (SMD = 0,475, p = 0,043), Verhaltensauffälligkeiten (SMD = −0,674, p < 0,001) und sozialer Kompetenz bei Vorschulkindern (SMD = 0,312, p = 0,041). Flexibilität und kognitive Kontrolle nicht signifikant (SMD = −0,282, p = 0,161). Stärkste Effekte durch Ballsport auf Motorik (SMD = 1,521, p < 0,001) und bei jüngeren Schulkindern (SMD = 1,482, p < 0,001).",
+    relevance: "Für die inklusive Bewegungsarbeit gilt: Ballsport und strukturiertes Training verbessern bei Kindern im Autismus-Spektrum Motorik, Sozialverhalten und Verhaltensregulation gleichzeitig — starkes Argument für vielfältige, individuell angepasste Bewegungsangebote.",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11903732/",
+    date: "2026-08-04"
+  },
+  {
+    title: "Effectiveness of different physical activity programs in improving older adults' physical capacities: a randomized controlled trial",
+    authors: "Cabo et al., 2025 · Frontiers in Physiology",
+    topic: "Motogeragogik",
+    method: "153 ältere Erwachsene (55–80 Jahre, Portugal); RCT mit vier parallelen Gruppen: Sensomotorisches Training (n = 46), Aqua Aerobic (n = 41), Pilates (n = 22), Kontrollgruppe (n = 44); 24 Wochen, 2×/Woche 40–45 Min mit progressiver Schwierigkeitssteigerung.",
+    findings: "Sensomotorisches Training zeigte signifikante Verbesserungen in allen Tests (p < 0,05) mit großen Effektgrößen, u. a. beim Reach-Behind-Your-Back-Test (rechts: d = −1,074; links: d = −1,323). Aqua Aerobic verbesserte Stand-und-Sitz-Test (p < 0,001), Unterarmflexion (p = 0,005) und Rückenflexibilität links (p = 0,002). Pilates- und Kontrollgruppe zeigten keine signifikanten Verbesserungen.",
+    relevance: "Sensomotorisches Training erzielt bei älteren Erwachsenen die stärksten Effekte auf Gleichgewicht, Kraft und Mobilität — ein klares Argument dafür, propriozeptive und koordinative Elemente in motogeragogische Programme zu integrieren.",
+    link: "https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2025.1540776/full",
+    date: "2026-08-04"
+  },
+  {
     title: "Effects of Developmental Gymnastics Exercise Program on Preschoolers' Motor Skills: A Randomised Controlled Trial",
     authors: "Radanović et al., 2025 · Children (MDPI)",
     topic: "Bewegungsförderung Vorschule",
